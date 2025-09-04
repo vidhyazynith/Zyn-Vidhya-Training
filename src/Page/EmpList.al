@@ -33,6 +33,10 @@ page 50125 "Employee List Page"
 
             }
         }
+        area(FactBoxes)
+        {
+            part(AssignedAssets; "Assigned Assets Factbox") { ApplicationArea = All; SubPageLink = "Employee ID" = field("Employee ID");}
+        }
     } 
     actions
     {
@@ -46,4 +50,5 @@ page 50125 "Employee List Page"
             }
         }
     } 
+
 }
