@@ -72,7 +72,7 @@ codeunit 50130 "Subscription Billing Processor"
         Setup.Modify();
 
         // Build manual invoice no. like INV0001
-        NewNo := 'INV' + PadStr(Format(Setup."Last Invoice No."), 4, '0');
+        NewNo :='INV' + COPYSTR('0000', 1, 4 - STRLEN(FORMAT(Setup."Last Invoice No."))) + FORMAT(Setup."Last Invoice No.");
 
         // Create new Sales Invoice Header
         SalesHeader.Init();
