@@ -38,6 +38,16 @@ pageextension 50109 SalesInvoiceCardExt extends "Sales Invoice"
                     end;
 
                 }
+                
+            }
+            group(CheckCreation)
+            {
+                Caption = 'Check Creation';
+                field("From Subscription"; Rec."From Subscription")
+                {
+                    ApplicationArea = All;
+                }
+
             }
         }
 

@@ -1,5 +1,5 @@
-namespace microsoft.purchase.document;
-enum 50100 "Approval Status"
+//namespace microsoft.purchase.document;
+enum 50100 "Approval Status pur"
 {
     Extensible = true;
 

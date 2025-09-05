@@ -44,6 +44,13 @@ tableextension 50119 SalesInvoiceTableExt extends "Sales Header"
         //     CalcFormula = max("Customer Sales History"."Item Price" Where ("Customer No" = field("Sell-to Customer No."), "Posting Date" = field("Max Posting Date") ));
         // }
 
+        field(50106; "From Subscription"; Boolean)
+        {
+            Caption = 'From Subscription';
+            DataClassification = ToBeClassified;
+        }
+        
+
     }
     trigger OnAfterDelete()
     var 

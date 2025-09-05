@@ -20,6 +20,14 @@ tableextension 50100 CustomerExt extends Customer
             FieldClass = FlowFilter;
 
         }
+        
+        //field(50103; "Sales Amount"; Decimal)
+        //{
+        //    Caption = 'Sales Amount';
+        //    FieldClass = FlowField;
+        //    CalcFormula = sum("Cust. Ledger Entry"."Amount" where(
+        //        "Customer No." = field("No."),
+        //        "Posting Date" = field("Sales Year")));
         field(50104; "Loyalty Points Allowed"; Integer)
         {
             Caption = 'Loyalty Points Allowed';
@@ -30,14 +38,6 @@ tableextension 50100 CustomerExt extends Customer
             Caption = 'Loyalty Points Used';
             dataClassification = CustomerContent;
         }
-
-        //field(50103; "Sales Amount"; Decimal)
-        //{
-        //    Caption = 'Sales Amount';
-        //    FieldClass = FlowField;
-        //    CalcFormula = sum("Cust. Ledger Entry"."Amount" where(
-        //        "Customer No." = field("No."),
-        //        "Posting Date" = field("Sales Year")));
     }
     trigger OnBeforeModify()
     var

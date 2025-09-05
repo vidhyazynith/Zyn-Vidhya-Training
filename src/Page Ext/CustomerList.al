@@ -9,6 +9,11 @@ pageextension 50115 CustomerListExt extends "Customer List"
                 SubPageLink = "No." = field("No.");
                 ApplicationArea = All;
             }
+            part(CustomerSubscriptions; "Customer Subscription FactBox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = field("No.");
+            }
         }
     }
 }
