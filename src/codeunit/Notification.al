@@ -94,7 +94,9 @@ codeunit 50171 "My Notification Mgt."
                 part(NotificationPart; "My Notification Part")
                 {
                     ApplicationArea = All;
+                    Visible = false; 
                 }
+                
             }
         }
     }

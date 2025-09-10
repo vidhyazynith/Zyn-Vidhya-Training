@@ -1,4 +1,4 @@
-table 50119 "Plan Table"
+table 50119 "ZYN_Plan Table"
 {
     DataClassification = ToBeClassified;
     
@@ -19,12 +19,12 @@ table 50119 "Plan Table"
         {
             Caption = 'Plan Name';
         }
-        field(4; "Status"; Enum "Plan Status")
+        field(4; "Status"; Enum "ZYN_Plan Status")
         {
             Caption = 'Status';
             trigger OnValidate()
             var
-                SubRec: Record "Subscription table";
+                SubRec: Record "ZYN_Subscription table";
             begin
                 // If Plan is set to Inactive, update all related Subscriptions
                 if (xRec.Status <> Status) and (Status = Status::Inactive) then begin
@@ -52,25 +52,10 @@ table 50119 "Plan Table"
             Clustered = true;
         }
     }
-    
-    fieldgroups
-    {
-        // Add changes to field groups here
-    }
-    
-    trigger OnInsert()
-    begin
-        
-    end;
-    
-    trigger OnModify()
-    begin
-        
-    end;
-    
+
     trigger OnDelete()
     var
-        SubRec: Record "Subscription table";
+        SubRec: Record "ZYN_Subscription table";
     begin
         // Instead of deleting Subscriptions, make them Inactive
         SubRec.Reset();
@@ -82,9 +67,5 @@ table 50119 "Plan Table"
             until SubRec.Next() = 0;
     end;
     
-    trigger OnRename()
-    begin
-        
-    end;
-    
+
 }

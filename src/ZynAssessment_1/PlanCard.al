@@ -1,7 +1,7 @@
-page 50157 "Plan Card"
+page 50157 "ZYN_Plan Card"
 {
     PageType = Card;
-    SourceTable ="Plan Table";
+    SourceTable ="ZYN_Plan Table";
     ApplicationArea = ALL;
     Caption = 'Plan Card';
 

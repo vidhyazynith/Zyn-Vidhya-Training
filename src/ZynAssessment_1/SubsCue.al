@@ -1,4 +1,4 @@
-page 50211 "Subscription Cue Page"
+page 50211 "ZYN_Subscription Cue Page"
 {
     PageType = CardPart;
     ApplicationArea = All;
@@ -15,10 +15,10 @@ page 50211 "Subscription Cue Page"
 
                     trigger OnDrillDown()
                     var
-                        SubRec: Record "Subscription table";
+                        SubRec: Record "ZYN_Subscription table";
                     begin
                         SubRec.SetRange("Subcrip. Status", SubRec."Subcrip. Status"::Active);
-                        PAGE.Run(PAGE::"Subscription List", SubRec);
+                        PAGE.Run(PAGE::"ZYN_Subscription List", SubRec);
                     end;
                 }
 
@@ -59,7 +59,7 @@ page 50211 "Subscription Cue Page"
 
     local procedure CalcActiveSubscriptions()
     var
-        SubRec: Record "Subscription table";
+        SubRec: Record "ZYN_Subscription table";
     begin
         SubRec.SetRange("Subcrip. Status", SubRec."Subcrip. Status"::Active);
         ActiveSubscriptions := SubRec.Count;

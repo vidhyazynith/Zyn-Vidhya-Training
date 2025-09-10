@@ -16,10 +16,14 @@ page 50106 "New Roll Center"
                 ApplicationArea = All;
 
             }
-            part(SubscriptionCues; "Subscription Cue Page")
+            part(SubscriptionCues; "ZYN_Subscription Cue Page")
             {
                 ApplicationArea = All;
             }
+             part(SubscriptionReminder; "ZYN_Reminder Notification")
+                {
+                    ApplicationArea = All;
+                }
         }
     }
     actions

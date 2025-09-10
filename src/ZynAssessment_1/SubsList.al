@@ -1,10 +1,10 @@
-page 50158 "Subscription List"
+page 50158 "ZYN_Subscription List"
 {
     PageType = List;
-    SourceTable ="Subscription Table";
+    SourceTable ="ZYN_Subscription Table";
     ApplicationArea = ALL;
     Caption = 'Subscription List';
-    CardPageID = "Subscription Card"; 
+    CardPageID = "ZYN_Subscription Card"; 
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -46,6 +46,15 @@ page 50158 "Subscription List"
                 field("Next Biling date"; Rec."Next Billing Date")
                 {
                     ApplicationArea = All;
+                }
+                field("Next Renewal Date"; Rec."Next Renewal Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Reminder Sent"; Rec."Reminder Sent")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
                 }
                 
                 }

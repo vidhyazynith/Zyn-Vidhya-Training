@@ -1,4 +1,4 @@
-enum 50111 "Subscription Status"
+enum 50111 "ZYN_Subscription Status"
 {
     Extensible = true;
 

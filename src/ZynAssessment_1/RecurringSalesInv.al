@@ -1,4 +1,4 @@
-codeunit 50130 "Subscription Billing Processor"
+codeunit 50130 "ZYN_Subscription Billing Mgt"
 {
     Subtype = Normal;
 
@@ -9,7 +9,7 @@ codeunit 50130 "Subscription Billing Processor"
 
     local procedure ProcessSubscriptions()
     var
-        SubRec: Record "Subscription table";
+        SubRec: Record "ZYN_Subscription table";
     begin
         SubRec.Reset();
         SubRec.SetRange("Subcrip. Status", SubRec."Subcrip. Status"::Active);
@@ -42,12 +42,12 @@ codeunit 50130 "Subscription Billing Processor"
             until SubRec.Next() = 0;
     end;
 
-    local procedure CreateSalesInvoice(SubRec: Record "Subscription table")
+    local procedure CreateSalesInvoice(SubRec: Record "ZYN_Subscription table")
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
-        PlanRec: Record "Plan Table";
-        Setup: Record "Subscription Setup";
+        PlanRec: Record "ZYN_Plan Table";
+        Setup: Record "ZYN_Subscription Setup";
         NewNo: Code[20];
     begin
         // Ensure subscription is still active and valid

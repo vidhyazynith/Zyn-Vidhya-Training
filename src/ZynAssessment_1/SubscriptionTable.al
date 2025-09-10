@@ -1,4 +1,4 @@
-table 50120 "Subscription table"
+table 50120 "ZYN_Subscription table"
 {
     DataClassification = ToBeClassified;
     
@@ -20,7 +20,7 @@ table 50120 "Subscription table"
         {
             Caption = 'Plan Id';
             DataClassification = ToBeClassified;
-            TableRelation = "Plan Table"."Plan Id";
+            TableRelation = "ZYN_Plan Table"."Plan Id";
         }
         field(4; "Start date"; Date)
         {
@@ -47,7 +47,7 @@ table 50120 "Subscription table"
             DataClassification = ToBeClassified;
             Caption = 'End date';
         }
-        field(7; "Subcrip. Status"; Enum "Subscription Status")
+        field(7; "Subcrip. Status"; Enum "ZYN_Subscription Status")
         {
             DataClassification = ToBeClassified;
             Caption = 'Status';
@@ -56,6 +56,21 @@ table 50120 "Subscription table"
         {
             DataClassification = ToBeClassified;
             Caption = 'Next Billing date';
+        }
+        field(9; "Next Renewal Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Next Renewal Date';
+            trigger OnValidate()
+            begin
+                if "Next Renewal Date" <= "End Date" then
+                Error('Next Renewal Date cannot be less than or equal to the End Date %1.', Format("End Date"));
+            end;
+        }
+        field(10; "Reminder Sent"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Reminder Sent';
         }
     }
     
@@ -108,25 +123,5 @@ begin
         "Next Billing Date" := 0D;
 end;
 
-    
-    trigger OnInsert()
-    begin
-        
-    end;
-    
-    trigger OnModify()
-    begin
-        
-    end;
-    
-    trigger OnDelete()
-    begin
-        
-    end;
-    
-    trigger OnRename()
-    begin
-        
-    end;
-    
+
 }

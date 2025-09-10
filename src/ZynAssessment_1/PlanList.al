@@ -1,10 +1,10 @@
-page 50155 "Plan List"
+page 50155 "ZYN_Plan List"
 {
     PageType = List;
-    SourceTable ="Plan Table";
+    SourceTable ="ZYN_Plan Table";
     ApplicationArea = ALL;
     Caption = 'Plan List';
-    CardPageID = "Plan Card"; 
+    CardPageID = "ZYN_Plan Card"; 
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;

@@ -1,7 +1,7 @@
-page 50159 "Subscription Card"
+page 50159 "ZYN_Subscription Card"
 {
     PageType = Card;
-    SourceTable ="Subscription Table";
+    SourceTable ="ZYN_Subscription Table";
     ApplicationArea = ALL;
     Caption = 'Subscription Card';
   
@@ -43,6 +43,15 @@ page 50159 "Subscription Card"
                 field("Next Biling date"; Rec."Next Billing Date")
                 {
                     ApplicationArea = All;
+                }
+                field("Next Renewal Date"; Rec."Next Renewal Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Reminder Sent"; Rec."Reminder Sent")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
                 }
                 
                 }

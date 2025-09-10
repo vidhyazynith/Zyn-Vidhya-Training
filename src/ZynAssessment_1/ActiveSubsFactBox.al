@@ -29,7 +29,7 @@ page 50220 "Customer Subscription FactBox"
 
     local procedure CalcActiveSubscriptions()
     var
-        SubRec: Record "Subscription table";
+        SubRec: Record "ZYN_Subscription table";
     begin
         Clear(ActiveSubscriptions);
         if Rec."No." = '' then

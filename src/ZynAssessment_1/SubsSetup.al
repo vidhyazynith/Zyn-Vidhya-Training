@@ -1,4 +1,4 @@
-table 50123 "Subscription Setup"
+table 50123 "ZYN_Subscription Setup"
 {
     DataClassification = ToBeClassified;
 
