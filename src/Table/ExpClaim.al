@@ -96,6 +96,11 @@ table 50122 "ZYN_Expense Claim Table"
             DataClassification = ToBeClassified;
             Caption = 'Bill File Name';
         }
+        field(13; "Rejection Reason"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Rejected Reason';
+        }
     }
 
     keys
@@ -110,17 +115,23 @@ table 50122 "ZYN_Expense Claim Table"
         ClaimCategory: Record "ZYN_Expense Claim Category";
         Claim: Record "ZYN_Expense Claim Table";
         ApprovedAmount: Decimal;
+        StartDate: Date;
+        EndDate: Date;
     begin
         Clear("Available Limit");
         // 1. Find category
         ClaimCategory.SetRange(CategoryName, Rec.Category);
         ClaimCategory.SetRange("Sub Type", Rec."Sub Type");
         if ClaimCategory.FindFirst() then begin
+            StartDate := CalcDate('<-CY>', WorkDate());  // first day of current year
+            EndDate := CalcDate('<CY>', WorkDate());   // last day of current year
             // 2. Sum approved claims for same Category + SubType
             Claim.Reset();
             Claim.SetRange(Category, Rec.Category);
             Claim.SetRange("Sub Type", Rec."Sub Type");
+            Claim.SetRange("Employee ID", Rec."Employee ID");
             Claim.SetRange(Status, Claim.Status::Approved);
+            Claim.SetRange("Claim Date",StartDate,EndDate);
             if Claim.FindSet() then
                 repeat
                     ApprovedAmount += Claim.Amount;

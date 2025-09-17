@@ -115,6 +115,9 @@ page 50164 "ZYN_Claim Approval Request"
                 ApplicationArea = All;
                 Image = Reject;
                 trigger OnAction()
+                var
+                    RejectDialog: Page "ZYN_Reject Claim Reason";
+                    ReasonText: Text[50];
                 begin
                     // 1. Status must be Pending Approval
                     if Rec.Status <> Rec.Status::"PendingApproval" then
@@ -122,10 +125,20 @@ page 50164 "ZYN_Claim Approval Request"
                     // 2. Bill must be uploaded
                     if not Rec.Bill.HasValue then
                         Error('Bill must be uploaded before rejecting the claim.');
-                    //Passed all validations
-                    Rec.Status := Rec.Status::Rejected;
-                    Rec.Modify(true);
-                    Message('Claim %1 has been rejected.', Rec."Claim ID");
+                    // 3. Open dialog for reason
+                    if RejectDialog.RunModal() = Action::OK then begin
+                        ReasonText := RejectDialog.GetReason();
+                        ReasonText := DelChr(ReasonText, '<>', ' ');
+                        if ReasonText = '' then
+                            Error('Rejection reason is mandatory.');
+                        // 4. Save reason to table
+                        Rec."Rejection Reason" := ReasonText;
+                        //Passed all validations
+                        Rec.Status := Rec.Status::Rejected;
+                        Rec.Modify(true);
+                        Message('Claim %1 has been rejected.', Rec."Claim ID");
+                    end else
+                        Error('Rejection cancelled by user.');
                 end;
             }
         }

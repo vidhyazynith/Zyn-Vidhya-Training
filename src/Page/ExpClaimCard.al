@@ -78,6 +78,10 @@ page 50162 "ZYN_Expense Claim Card"
                 {
                     ApplicationArea = All;
                 }
+                field("Rejection Reason"; Rec."Rejection Reason")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
 
