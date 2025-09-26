@@ -1,4 +1,4 @@
-table 50104 "Complaint"
+table 50104 "Zyn_Complaint Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -14,20 +14,17 @@ table 50104 "Complaint"
             Caption = 'Customer ID';
             DataClassification = CustomerContent;
             Editable = false;
-            //TableRelation = "Customer" WHERE("No." = field("Customer ID"));
         }
         field(3; "Customer Name"; Text[100])
         {
             Caption = 'Customer Name';
-            // FieldClass = FlowField;
-            // CalcFormula = lookup("customer".Name where("No." = field("Customer ID")));
         }
-        field(4; "Problem"; Enum "Available Problems")
+        field(4; "Problem"; Enum "Zyn_Available Problems")
         {
             Caption = 'Problem';
             DataClassification = CustomerContent;
         }
-        field(5; "Department"; Enum "Technician Department")
+        field(5; "Department"; Enum "Zyn_Technician Department")
         {
             Caption = 'Department';
             DataClassification = CustomerContent;
@@ -36,7 +33,7 @@ table 50104 "Complaint"
         {
             Caption = 'Technician ID';
             DataClassification = SystemMetadata;
-            TableRelation = "Technician Log"."Technician ID" WHERE(Department = FIELD(Department));
+            TableRelation = "Zyn_Technician Log Table"."Technician ID" WHERE(Department = FIELD(Department));
         }
         field(7; "Problem Description"; Text[250])
         {
@@ -49,9 +46,11 @@ table 50104 "Complaint"
             DataClassification = CustomerContent;
         }
     }
-
     keys
     {
-        key(PK; "Entry No.", "Customer ID") { Clustered = true; }
+        key(PK; "Entry No.", "Customer ID")
+        {
+            Clustered = true;
+        }
     }
 }

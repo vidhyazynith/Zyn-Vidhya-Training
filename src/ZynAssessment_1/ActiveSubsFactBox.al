@@ -1,10 +1,9 @@
-page 50220 "Customer Subscription FactBox"
+page 50220 Zyn_CustomerSubscripFactBox
 {
     PageType = CardPart;
     ApplicationArea = All;
     SourceTable = Customer;
     Caption = 'Active Subscriptions';
-
     layout
     {
         area(content)
@@ -18,7 +17,6 @@ page 50220 "Customer Subscription FactBox"
             }
         }
     }
-
     var
         ActiveSubscriptions: Integer;
 
@@ -29,12 +27,11 @@ page 50220 "Customer Subscription FactBox"
 
     local procedure CalcActiveSubscriptions()
     var
-        SubRec: Record "ZYN_Subscription table";
+        SubRec: Record "Zyn_Subscription table";
     begin
         Clear(ActiveSubscriptions);
         if Rec."No." = '' then
             exit;
-
         SubRec.SetRange(CustomerId, Rec."No.");
         SubRec.SetRange("Subcrip. Status", SubRec."Subcrip. Status"::Active);
         ActiveSubscriptions := SubRec.Count;

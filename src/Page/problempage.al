@@ -1,12 +1,7 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-
-page 50100 "Problem Page"
+page 50100 Zyn_CompliantCard
 {
     PageType = Card;
-    SourceTable = "Complaint";
+    SourceTable = "Zyn_Complaint Table";
     ApplicationArea = All;
     Caption = 'Compliant Card';
     layout
@@ -18,33 +13,26 @@ page 50100 "Problem Page"
                 field("Customer ID"; Rec."Customer ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'Customer ID';
                 }
-                
                 field("Problem"; Rec.Problem)
                 {
                     ApplicationArea = All;
-                    Caption = 'Problem';
                 }
                 field("Department"; Rec."Department")
                 {
                     ApplicationArea = All;
-                    Caption = 'Department';
                 }
                 field("Technician id"; Rec."Technician ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'Technician ID';
                 }
                 field("Problem Description"; Rec."Problem Description")
                 {
                     ApplicationArea = All;
-                    Caption = 'Problem Description';
                 }
-                field("Date";Rec."Date")
+                field("Date"; Rec."Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Date';
                 }
             }
         }

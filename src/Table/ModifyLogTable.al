@@ -1,11 +1,6 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-
-table 50106 "Customer Modify Log"
+table 50106 Zyn_CustomerModifyLogTable
 {
-    // DataClassification = ToBeClassified;
+    DataClassification = ToBeClassified;
     fields
     {
         field(1; "Entry No."; Integer)
@@ -26,21 +21,20 @@ table 50106 "Customer Modify Log"
         {
             DataClassification = CustomerContent;
         }
-
         field(5; "New Value"; Text[50])
         {
             DataClassification = CustomerContent;
         }
-
         field(6; "User ID"; Text[50])
         {
             DataClassification = CustomerContent;
         }
     }
     keys
-
     {
-        key(PK; "Entry No.", "Customer Number") { }
+        key(PK; "Entry No.", "Customer Number")
+        {
+            Clustered = true;
+        }
     }
-
 }

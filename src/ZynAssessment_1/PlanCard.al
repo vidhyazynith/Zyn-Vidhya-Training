@@ -1,11 +1,9 @@
-page 50157 "ZYN_Plan Card"
+page 50157 "Zyn_Plan Card"
 {
     PageType = Card;
-    SourceTable ="ZYN_Plan Table";
+    SourceTable = "Zyn_Plan Table";
     ApplicationArea = ALL;
     Caption = 'Plan Card';
-
-
     layout
     {
         area(content)
@@ -14,7 +12,7 @@ page 50157 "ZYN_Plan Card"
             {
                 field("Plan ID"; Rec."Plan Id")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("Fee"; Rec.Fee)
                 {
@@ -32,31 +30,24 @@ page 50157 "ZYN_Plan Card"
                 {
                     ApplicationArea = All;
                 }
-                
-                }
-
-
             }
-            
-
-    }
-    actions
-{
-    area(Processing)
-    {
-        action(SetInactive)
-        {
-            Caption = 'Set Plan Inactive';
-            ApplicationArea = All;
-
-            trigger OnAction()
-            begin
-                Rec.Validate(Status, Rec.Status::Inactive);
-                Rec.Modify(true);
-                Message('Plan %1 has been set to Inactive and all related subscriptions are now inactive.', Rec."PlanName");
-            end;
         }
     }
-}
-
+    actions
+    {
+        area(Processing)
+        {
+            action(SetInactive)
+            {
+                Caption = 'Set Plan Inactive';
+                ApplicationArea = All;
+                trigger OnAction()
+                begin
+                    Rec.Validate(Status, Rec.Status::Inactive);
+                    Rec.Modify(true);
+                    Message('Plan %1 has been set to Inactive and all related subscriptions are now inactive.', Rec."PlanName");
+                end;
+            }
+        }
+    }
 }

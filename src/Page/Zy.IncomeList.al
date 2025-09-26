@@ -1,14 +1,13 @@
-page 50138 "Income List Page"
+page 50138 "Zyn_Income List"
 {
     PageType = List;
-    SourceTable ="Income table";
+    SourceTable = "Zyn_Income Table";
     ApplicationArea = ALL;
     Caption = 'Income List';
-    CardPageID = "Income Card Page"; 
+    CardPageID = "Zyn_Income Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -23,7 +22,7 @@ page 50138 "Income List Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Amount";Rec.Amount)
+                field("Amount"; Rec.Amount)
                 {
                     ApplicationArea = All;
                 }
@@ -31,19 +30,16 @@ page 50138 "Income List Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Category";Rec.Category)
+                field("Category"; Rec.Category)
                 {
                     ApplicationArea = All;
                 }
                 field("Category name"; Rec."Category Name")
                 {
                 }
-                
-
             }
         }
     }
-    
     actions
     {
         area(processing)
@@ -55,25 +51,19 @@ page 50138 "Income List Page"
                 Image = New;
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"Income Category List");
+                    Page.Run(Page::"Zyn_Income Category List");
                 end;
             }
-
             action(ExportToExcel)
             {
-            ApplicationArea = All;
-            Caption = 'Income Expenses to Excel';
-            Image = Export;
-
-            trigger OnAction()
-            begin
-                Report.RunModal(Report::"Income Export Report", true, true);
-            end;
+                ApplicationArea = All;
+                Caption = 'Income Expenses to Excel';
+                Image = Export;
+                trigger OnAction()
+                begin
+                    Report.RunModal(Report::"Zyn_Income Export Report", true, true);
+                end;
+            }
         }
-
-        }
-    
     }
-    
-    
 }

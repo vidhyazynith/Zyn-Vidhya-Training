@@ -1,10 +1,9 @@
-page 50121 "Budget category FactBox"
+page 50121 Zyn_BudgetCategoryFactBox
 {
     PageType = CardPart;
-    SourceTable = "Budget Table";
+    SourceTable = "Zyn_Budget Table";
     ApplicationArea = All;
     Caption = 'Category Budget Summary';
-
     layout
     {
         area(content)
@@ -15,7 +14,6 @@ page 50121 "Budget category FactBox"
                 {
                     ApplicationArea = All;
                     Caption = 'Current Month';
-
                     trigger OnDrillDown()
                     begin
                         OpenBudgetList(1);
@@ -25,7 +23,6 @@ page 50121 "Budget category FactBox"
                 {
                     ApplicationArea = All;
                     Caption = 'Current Quarter';
-
                     trigger OnDrillDown()
                     begin
                         OpenBudgetList(2);
@@ -35,7 +32,6 @@ page 50121 "Budget category FactBox"
                 {
                     ApplicationArea = All;
                     Caption = 'Current Half-Year';
-
                     trigger OnDrillDown()
                     begin
                         OpenBudgetList(3);
@@ -45,7 +41,6 @@ page 50121 "Budget category FactBox"
                 {
                     ApplicationArea = All;
                     Caption = 'Current Year';
-
                     trigger OnDrillDown()
                     begin
                         OpenBudgetList(4);
@@ -55,19 +50,16 @@ page 50121 "Budget category FactBox"
                 {
                     ApplicationArea = All;
                     Caption = 'Previous Year';
-
                     trigger OnDrillDown()
                     begin
                         OpenBudgetList(5);
                     end;
                 }
             }
-
         }
     }
-
     var
-        BudgetRec: Record "Budget Table";
+        BudgetRec: Record "Zyn_Budget Table";
         CurrMonthBudget: Decimal;
         CurrQuarterBudget: Decimal;
         CurrHalfYearBudget: Decimal;
@@ -84,57 +76,45 @@ page 50121 "Budget category FactBox"
         CurrYear: Integer;
         WorkDt: Date;
         PrevYear: Integer;
-        
-    begin  
-    
+    begin
         Clear(CurrMonthBudget);
         Clear(CurrQuarterBudget);
         Clear(CurrHalfYearBudget);
         Clear(CurrYearBudget);
         Clear(PrevYearBudget);
-
         WorkDt := WorkDate();
-        CurrYear := Date2DMY(WorkDt,3);
-        CurrMonth := Date2DMY(WorkDt,2);
+        CurrYear := Date2DMY(WorkDt, 3);
+        CurrMonth := Date2DMY(WorkDt, 2);
         CurrQuarter := (CurrMonth - 1) div 3 + 1;
-        PrevYear := CurrYear - 1;             
-
+        PrevYear := CurrYear - 1;
         //---Previous year---
         StartDate := DMY2Date(1, 1, PrevYear);
         EndDate := DMY2Date(31, 12, PrevYear);
         PrevYearBudget := GetBudgetTotal(Rec."Category", StartDate, EndDate);
-
         // --- Current Month ---
         StartDate := DMY2Date(1, CurrMonth, CurrYear);
         EndDate := CalcDate('<CM>', StartDate);
         CurrMonthBudget := GetBudgetTotal(Rec."Category", StartDate, EndDate);
-
         // --- Current Quarter ---
-        StartDate := DMY2Date(1, (CurrQuarter-1)*3+1, CurrYear);
+        StartDate := DMY2Date(1, (CurrQuarter - 1) * 3 + 1, CurrYear);
         EndDate := CalcDate('<CQ>', StartDate);
         CurrQuarterBudget := GetBudgetTotal(Rec."Category", StartDate, EndDate);
-
         // --- Current Half-Year ---
         if CurrMonth <= 6 then
             StartDate := DMY2Date(1, 1, CurrYear)
         else
             StartDate := DMY2Date(1, 7, CurrYear);
-
         if CurrMonth <= 6 then
             EndDate := DMY2Date(30, 6, CurrYear)
         else
             EndDate := DMY2Date(31, 12, CurrYear);
-
         CurrHalfYearBudget := GetBudgetTotal(Rec."Category", StartDate, EndDate);
-
         // --- Current Year ---
         StartDate := DMY2Date(1, 1, CurrYear);
         EndDate := DMY2Date(31, 12, CurrYear);
         CurrYearBudget := GetBudgetTotal(Rec.Category, StartDate, EndDate);
-
-       
     end;
-
+    //Calculate Total Budget
     local procedure GetBudgetTotal(CategoryName: Code[100]; StartDate: Date; EndDate: Date): Decimal
     begin
         BudgetRec.Reset();
@@ -143,10 +123,10 @@ page 50121 "Budget category FactBox"
         BudgetRec.CalcSums("Budget Amount");
         exit(BudgetRec."Budget Amount");
     end;
-
+    //Open budget list page according to cue 
     local procedure OpenBudgetList(PeriodType: Integer)
     var
-        BudgetList: Page "Budget List Page"; // Replace with your actual Expense List page ID/name
+        BudgetList: Page Zyn_BudgetList; // Replace with your actual Expense List page ID/name
         StartDate: Date;
         EndDate: Date;
         CurrMonth: Integer;
@@ -156,21 +136,24 @@ page 50121 "Budget category FactBox"
         WorkDt: Date;
     begin
         WorkDt := WorkDate();
-        CurrYear := Date2DMY(WorkDt,3);
-        CurrMonth := Date2DMY(WorkDt,2);
+        CurrYear := Date2DMY(WorkDt, 3);
+        CurrMonth := Date2DMY(WorkDt, 2);
         CurrQuarter := (CurrMonth - 1) div 3 + 1;
         PrevYear := CurrYear - 1;
 
         case PeriodType of
-            1: begin // Current Month
+            1:
+                begin // Current Month
                     StartDate := DMY2Date(1, CurrMonth, CurrYear);
                     EndDate := CalcDate('<CM>', StartDate);
                 end;
-            2: begin // Current Quarter
-                    StartDate := DMY2Date(1, (CurrQuarter-1)*3+1, CurrYear);
+            2:
+                begin // Current Quarter
+                    StartDate := DMY2Date(1, (CurrQuarter - 1) * 3 + 1, CurrYear);
                     EndDate := CalcDate('<CQ>', StartDate);
                 end;
-            3: begin // Current Half-Year
+            3:
+                begin // Current Half-Year
                     if CurrMonth <= 6 then begin
                         StartDate := DMY2Date(1, 1, CurrYear);
                         EndDate := DMY2Date(30, 6, CurrYear);
@@ -179,24 +162,22 @@ page 50121 "Budget category FactBox"
                         EndDate := DMY2Date(31, 12, CurrYear);
                     end;
                 end;
-            4: begin // Current Year
+            4:
+                begin // Current Year
                     StartDate := DMY2Date(1, 1, CurrYear);
                     EndDate := DMY2Date(31, 12, CurrYear);
                 end;
-            5: begin // Previous Year
+            5:
+                begin // Previous Year
                     StartDate := DMY2Date(1, 1, PrevYear);
                     EndDate := DMY2Date(31, 12, PrevYear);
                 end;
         end;
-
         BudgetRec.Reset();
         BudgetRec.SetRange("Category", Rec."Category");
-        BudgetRec.SetRange("From Date", StartDate); 
-        BudgetRec.SetRange("To Date", EndDate); 
+        BudgetRec.SetRange("From Date", StartDate);
+        BudgetRec.SetRange("To Date", EndDate);
         BudgetList.SetTableView(BudgetRec);
         BudgetList.Run();
-
-
     end;
-
 }

@@ -1,4 +1,4 @@
-table 50112 "Budget Table"
+table 50112 "Zyn_Budget Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -23,16 +23,9 @@ table 50112 "Budget Table"
         field(5; "Category"; Code[100])
         {
             Caption = 'Category';
-            TableRelation = "Category Table".Name;
+            TableRelation = "Zyn_Category Table".Name;
         }
-        // {
-        // field(6; "Category Name"; Text[100])
-        // {
-        //     FieldClass = FlowField;
-        //     CalcFormula = lookup("Category Table".Name where("Category ID" = field(Category)));
-        // }
     }
-
     keys
     {
         key(PK; "Budget ID", Category)

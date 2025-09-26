@@ -1,9 +1,4 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-
-table 50101 "Customer Visit Log"
+table 50101 "Zyn_Customer VisitLog Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -21,12 +16,10 @@ table 50101 "Customer Visit Log"
         {
             DataClassification = CustomerContent;
         }
-
         field(4; "Purpose"; Text[20])
         {
             DataClassification = CustomerContent;
         }
-
         field(5; "Notes"; Text[20])
         {
             DataClassification = CustomerContent;

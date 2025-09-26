@@ -1,8 +1,6 @@
-
-enum 50103 "Sales Invoice Text"
+enum 50103 "Zyn_Sales Invoice Text"
 {
     Extensible = true;
-
     value(0; Beginning)
     {
         Caption = 'Beginning';

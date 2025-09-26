@@ -1,4 +1,4 @@
-table 50113 "Customer Sales History"
+table 50113 Zyn_CustomerSalesHistoryTable
 {
     DataClassification = ToBeClassified;
     fields
@@ -32,7 +32,5 @@ table 50113 "Customer Sales History"
         {
             Clustered = true;
         }
-        //key(CustomerItemDate; "Customer No", "Item No", "Posting Date") { }
     }
-
 }

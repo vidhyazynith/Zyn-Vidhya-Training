@@ -1,9 +1,8 @@
-page 50120 "Ending Text ListPart"
+page 50120 Zyn_EndingTextListPart
 {
     PageType = ListPart;
-    SourceTable = "ExtendedTextTable";
+    SourceTable = Zyn_ExtendedTextTable;
     ApplicationArea = All;
-
     layout
     {
         area(content)
@@ -13,12 +12,10 @@ page 50120 "Ending Text ListPart"
                 field("Line No."; rec."Line No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Line No.';
                 }
                 field("Text"; rec."Text")
                 {
                     ApplicationArea = All;
-                    Caption = 'Text';
                 }
             }
         }

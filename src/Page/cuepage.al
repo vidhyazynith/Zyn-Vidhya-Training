@@ -1,13 +1,8 @@
-namespace DefaultPublisher.ALProject4;
-
-using Microsoft.Sales.Customer;
-
-page 50105 "Customer Cue Card"
+page 50105 "Zyn_Customer Cue Card"
 {
     PageType = CardPart;
-    SourceTable = "Customer Visit Log";
+    SourceTable = "Zyn_Customer VisitLog Table";
     ApplicationArea = All;
-
     layout
     {
         area(Content)
@@ -18,16 +13,14 @@ page 50105 "Customer Cue Card"
                 {
                     ApplicationArea = All;
                     DrillDown = true;
-
                     trigger OnDrillDown()
                     var
-                        VisitLogRec: Record "Customer Visit Log";
+                        VisitLogRec: Record "Zyn_Customer VisitLog Table";
                         CustomerRec: Record Customer;
                         TempCustomer: Record Customer temporary;
                         today: Date;
                     begin
                         today := WorkDate();
-
                         VisitLogRec.SetRange(Date, today);
                         if VisitLogRec.FindSet() then begin
                             repeat
@@ -40,18 +33,15 @@ page 50105 "Customer Cue Card"
                                 end;
                             until VisitLogRec.Next() = 0;
                         end;
-
                         PAGE.RunModal(PAGE::"Customer List", TempCustomer);
                     end;
                 }
-
-
             }
         }
     }
     var
         Visitlogcount: Integer;
-        visitlogRec: Record "Customer Visit Log";
+        visitlogRec: Record "Zyn_Customer VisitLog Table";
         today: Date;
 
     trigger OnOpenPage()
@@ -62,6 +52,4 @@ page 50105 "Customer Cue Card"
         visitlogRec.SetRange(Date, WorkDate());
         Visitlogcount := visitlogRec.Count;
     end;
-
-
 }

@@ -1,14 +1,13 @@
-report 50133 "Sales order date change"
+report 50133 Zyn_SalesOrderDateChange
 {
     Caption = 'Posting date change';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     AdditionalSearchTerms = 'Posting date change';
     ProcessingOnly = true;
-
     dataset
     {
-        dataitem(SalesHeader;"Sales Header")
+        dataitem(SalesHeader; "Sales Header")
         {
             DataItemTableView = where(Status = const(Open), "Document Type" = const(Order));
             trigger OnAfterGetRecord()
@@ -38,11 +37,11 @@ report 50133 "Sales order date change"
             }
         }
     }
-
     trigger OnInitReport()
     begin
         clear(UpdatedCount);
     end;
+
     var
         NewPostingDate: Date;
         UpdatedCount: Integer;

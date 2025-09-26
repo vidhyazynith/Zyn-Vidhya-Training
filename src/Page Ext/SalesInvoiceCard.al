@@ -1,4 +1,4 @@
-pageextension 50109 SalesInvoiceCardExt extends "Sales Invoice"
+pageextension 50109 Zyn_SalesInvoiceCardExt extends "Sales Invoice"
 {
     layout
     {
@@ -13,15 +13,13 @@ pageextension 50109 SalesInvoiceCardExt extends "Sales Invoice"
                     trigger OnValidate()
                     var
                         SalesHeaderRec: Record "Sales Header";
-                        ExtTextHandler: Codeunit "Extended Text Handler";
-                        Type: Enum "Sales Invoice Text";
-
+                        ExtTextHandler: Codeunit "Zyn_Extended Text Handler";
+                        Type: Enum "Zyn_Sales Invoice Text";
                     begin
                         Type := Type::Beginning;
                         SalesHeaderRec := Rec;
-                        ExtTextHandler.LoadExtendedTextGeneric(Rec,Rec."Beginning Text",Type)
-                end;
-
+                        ExtTextHandler.LoadExtendedTextGeneric(Rec, Rec."Beginning Text", Type)
+                    end;
                 }
                 field("Ending Text"; Rec."Ending Text")
                 {
@@ -29,16 +27,14 @@ pageextension 50109 SalesInvoiceCardExt extends "Sales Invoice"
                     trigger OnValidate()
                     var
                         SalesHeaderRec: Record "Sales Header";
-                        ExtTextHandler: Codeunit "Extended Text Handler";
-                        Type: Enum "Sales Invoice Text";
+                        ExtTextHandler: Codeunit "Zyn_Extended Text Handler";
+                        Type: Enum "Zyn_Sales Invoice Text";
                     begin
                         Type := Type::Ending;
                         SalesHeaderRec := Rec;
-                        ExtTextHandler.LoadExtendedTextGeneric(Rec,Rec."Ending Text",Type);
+                        ExtTextHandler.LoadExtendedTextGeneric(Rec, Rec."Ending Text", Type);
                     end;
-
                 }
-                
             }
             group(CheckCreation)
             {
@@ -47,26 +43,22 @@ pageextension 50109 SalesInvoiceCardExt extends "Sales Invoice"
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
-
         addafter("Invoice Texts")
         {
-            part("Beginning ListPart"; "Description ListPart")
+            part("Beginning ListPart"; Zyn_BeginningTextListpart)
             {
                 ApplicationArea = All;
                 Caption = 'Beginning';
                 SubPageLink = "Document No." = field("No."), Type = const(Beginning);
             }
-            part("Ending ListPart"; "Ending Text ListPart")
+            part("Ending ListPart"; Zyn_EndingTextListPart)
             {
                 ApplicationArea = All;
                 Caption = 'Ending';
                 SubPageLink = "Document No." = field("No."), Type = const(Ending);
             }
-
         }
-
     }
 }

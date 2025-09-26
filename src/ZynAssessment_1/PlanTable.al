@@ -1,16 +1,15 @@
-table 50119 "ZYN_Plan Table"
+table 50119 "Zyn_Plan Table"
 {
     DataClassification = ToBeClassified;
-    
     fields
     {
-        field(1;"Plan Id"; Integer)
+        field(1; "Plan Id"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Plan ID';
             AutoIncrement = true;
         }
-        field(2;"Fee"; Decimal)
+        field(2; "Fee"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Fee';
@@ -19,12 +18,12 @@ table 50119 "ZYN_Plan Table"
         {
             Caption = 'Plan Name';
         }
-        field(4; "Status"; Enum "ZYN_Plan Status")
+        field(4; "Status"; Enum "Zyn_Plan Status")
         {
             Caption = 'Status';
             trigger OnValidate()
             var
-                SubRec: Record "ZYN_Subscription table";
+                SubRec: Record "Zyn_Subscription table";
             begin
                 // If Plan is set to Inactive, update all related Subscriptions
                 if (xRec.Status <> Status) and (Status = Status::Inactive) then begin
@@ -42,9 +41,7 @@ table 50119 "ZYN_Plan Table"
         {
             Caption = 'Description';
         }
-
     }
-    
     keys
     {
         key(PK; "Plan Id")
@@ -52,10 +49,9 @@ table 50119 "ZYN_Plan Table"
             Clustered = true;
         }
     }
-
     trigger OnDelete()
     var
-        SubRec: Record "ZYN_Subscription table";
+        SubRec: Record "Zyn_Subscription table";
     begin
         // Instead of deleting Subscriptions, make them Inactive
         SubRec.Reset();
@@ -66,6 +62,4 @@ table 50119 "ZYN_Plan Table"
                 SubRec.Modify();
             until SubRec.Next() = 0;
     end;
-    
-
 }

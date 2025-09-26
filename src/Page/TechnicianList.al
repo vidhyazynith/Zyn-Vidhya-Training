@@ -1,57 +1,48 @@
-namespace DefaultPublisher.ALProject4;
-using microsoft.Sales.Customer;
-using Microsoft.Sales.Document;
-page  50104 "Technician list"
+page 50104 "Zyn_Technician list"
 {
     PageType = List;
-    SourceTable = "Technician Log";
+    SourceTable = "Zyn_Technician Log Table";
     ApplicationArea = All;
     Caption = 'Technician List';
     UsageCategory = Lists;
     Editable = true;
-    CardPageID = "Technician Log Card"; 
-
+    CardPageID = "Zyn_Technician Log Card";
     layout
     {
         area(Content)
         {
             group(main)
             {
-            repeater(Group)
-            {
-                field("ID"; Rec."Technician ID")
+                repeater(Group)
                 {
-                    ApplicationArea = All;
-                    Caption = 'ID';
+                    field("ID"; Rec."Technician ID")
+                    {
+                        ApplicationArea = All;
+                    }
+                    field("Name"; Rec."Technician Name")
+                    {
+                        ApplicationArea = All;
+                    }
+                    field("Department"; rec."Department")
+                    {
+                        ApplicationArea = All;
+                    }
+                    field("Phone No."; rec."Phone No.")
+                    {
+                        ApplicationArea = All;
+                    }
+                    field("Prob Count"; rec."Prob Count")
+                    {
+                        ApplicationArea = All;
+                        Editable = false;
+                    }
                 }
-                field("Name"; Rec."Technician Name")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Name';
-                }
-                field("Department"; rec."Department")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Department';
-                }
-                field("Phone No."; rec."Phone No." )
-                {
-                    ApplicationArea = All;
-                    Caption = 'Phone No.';
-                }
-                field("Prob Count"; rec."Prob Count")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Problem Count';
-                    Editable = false;
-                }
-            }}
-            part("Complaint ListPart"; "Complaint ListPart")
+            }
+            part("Complaint ListPart"; "Zyn_Complaint ListPart")
             {
                 SubPageLink = "Technician ID" = field("Technician ID");
                 ApplicationArea = All;
-                Caption = 'Complaint List';
             }
+        }
     }
-}
 }

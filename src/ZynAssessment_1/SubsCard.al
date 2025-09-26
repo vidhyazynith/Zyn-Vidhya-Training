@@ -1,11 +1,9 @@
-page 50159 "ZYN_Subscription Card"
+page 50159 "Zyn_Subscription Card"
 {
     PageType = Card;
-    SourceTable ="ZYN_Subscription Table";
+    SourceTable = "Zyn_Subscription table";
     ApplicationArea = ALL;
     Caption = 'Subscription Card';
-  
-
     layout
     {
         area(content)
@@ -14,7 +12,7 @@ page 50159 "ZYN_Subscription Card"
             {
                 field("SubId"; Rec."Sub ID")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("CustId"; Rec.CustomerId)
                 {
@@ -53,11 +51,7 @@ page 50159 "ZYN_Subscription Card"
                     ApplicationArea = All;
                     Editable = false;
                 }
-                
-                }
-
-
             }
-
+        }
     }
 }

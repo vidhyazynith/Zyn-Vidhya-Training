@@ -1,14 +1,13 @@
-page 50147 "Category List Page"
+page 50147 "Zyn_Category List"
 {
     PageType = List;
-    SourceTable ="Category table";
+    SourceTable = "Zyn_Category Table";
     ApplicationArea = ALL;
     Caption = 'Category List';
-    CardPageID = "Category Card Page";
+    CardPageID = "Zyn_Category Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -23,7 +22,7 @@ page 50147 "Category List Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }
@@ -31,18 +30,16 @@ page 50147 "Category List Page"
         }
         area(factboxes)
         {
-            part(CategoryExpenseFactbox; "Category Expense FactBox")
+            part(CategoryExpenseFactbox; Zyn_ExpenseCategoryFactBox)
             {
                 SubPageLink = Name = field(Name); // Link FactBox to selected category
                 ApplicationArea = All;
             }
-            part(CategoryBudgetFactbox; "Budget category FactBox")
+            part(CategoryBudgetFactbox; Zyn_BudgetCategoryFactBox)
             {
                 SubPageLink = Category = field(Name); // Link FactBox to selected category
                 ApplicationArea = All;
             }
         }
-
-        
     }
 }

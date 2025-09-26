@@ -1,5 +1,4 @@
-// Page Extension for Posted Sales Invoice
-pageextension 50111 "PostedSalesInvoice Ext" extends "Posted Sales Invoice"
+pageextension 50111 Zyn_PostedSalesInvoiceExt extends "Posted Sales Invoice"
 {
     layout
     {
@@ -7,7 +6,7 @@ pageextension 50111 "PostedSalesInvoice Ext" extends "Posted Sales Invoice"
         {
             group("Invoice Texts")
             {
-                field("Beginning Text"; Rec."Beginning Text") // Add field in table extension too
+                field("Beginning Text"; Rec."Beginning Text")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -17,7 +16,7 @@ pageextension 50111 "PostedSalesInvoice Ext" extends "Posted Sales Invoice"
                     ApplicationArea = All;
                     Editable = false;
                 }
-                field("Beginning inv"; Rec."begin Inv") // Add field in table extension too
+                field("Beginning inv"; Rec."begin Inv")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -31,21 +30,18 @@ pageextension 50111 "PostedSalesInvoice Ext" extends "Posted Sales Invoice"
         }
         addafter("Invoice Texts")
         {
-            part("Posted Begin Invoice"; "Posted Beginning Text ListPart") // your custom listpart
+            part("Posted Begin Invoice"; Zyn_PostedBeginTextListPart)
             {
-                Caption= 'Begin Text';
+                Caption = 'Begin Text';
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("No."),Type = const(Beginning);
+                SubPageLink = "Document No." = FIELD("No."), Type = const(Beginning);
             }
-
-            part("Posted End Invoice"; "Posted Ending Text ListPart") // your custom listpart
+            part("Posted End Invoice"; Zyn_PostedEndingTextListPart)
             {
                 Caption = 'End Text';
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("No."),Type = const(ending);
+                SubPageLink = "Document No." = FIELD("No."), Type = const(ending);
             }
-
-
         }
     }
 }

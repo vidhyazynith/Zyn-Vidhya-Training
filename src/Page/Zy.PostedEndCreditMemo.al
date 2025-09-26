@@ -1,9 +1,8 @@
-page 50118 "Posted End Cr.Memo ListPart"
+page 50118 Zyn_PostedEndCrMemoListPart
 {
     PageType = ListPart;
-    SourceTable = ExtendedTextTable;
+    SourceTable = Zyn_ExtendedTextTable;
     Editable = false;
-
     layout
     {
         area(content)
@@ -13,19 +12,15 @@ page 50118 "Posted End Cr.Memo ListPart"
                 field("Line No."; rec."Line No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Line No.';
                 }
                 field(Text; rec."Text")
                 {
                     ApplicationArea = All;
-                    Caption = 'Text';
                 }
                 field("Document Type"; rec."Sales Document Type")
                 {
                     ApplicationArea = All;
-                    Caption = 'Document Type';
                 }
-
             }
         }
     }

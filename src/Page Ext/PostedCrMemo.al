@@ -1,5 +1,4 @@
-// Page Extension for Posted Sales Invoice
-pageextension 50119 "PostedSalesCrMemoExt" extends "Posted Sales Credit Memo"
+pageextension 50119 "Zyn_PostedSalesCrMemoEx""" extends "Posted Sales Credit Memo"
 {
     layout
     {
@@ -7,10 +6,9 @@ pageextension 50119 "PostedSalesCrMemoExt" extends "Posted Sales Credit Memo"
         {
             group("Cr.Memo Texts")
             {
-                field("Beginning Text"; Rec."Beginning Text") // Add field in table extension too
+                field("Beginning Text"; Rec."Beginning Text")
                 {
                     ApplicationArea = All;
-                    
                     Editable = false;
                 }
                 field("Ending Text"; Rec."Ending Text")
@@ -22,19 +20,16 @@ pageextension 50119 "PostedSalesCrMemoExt" extends "Posted Sales Credit Memo"
         }
         addafter("Cr.Memo Texts")
         {
-            part("Posted Beginning Cr.Memo "; "Posted Begin Cr.Memo ListPart") // your custom listpart
+            part("Posted Beginning Cr.Memo "; Zyn_PostedBeginCrMemoListPart)
             {
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("No."),Type = const(Beginning);
+                SubPageLink = "Document No." = FIELD("No."), Type = const(Beginning);
             }
-
-            part("Posted Ending Cr.Memo "; "Posted End Cr.Memo ListPart") // your custom listpart
+            part("Posted Ending Cr.Memo "; Zyn_PostedEndCrMemoListPart)
             {
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("No."),Type = const(Ending);
+                SubPageLink = "Document No." = FIELD("No."), Type = const(Ending);
             }
-
         }
-
     }
 }

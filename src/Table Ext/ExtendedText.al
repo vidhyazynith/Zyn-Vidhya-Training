@@ -1,4 +1,4 @@
-tableextension 50104 ExtendedTextLineExt extends "Extended Text Line"
+tableextension 50104 Zyn_ExtendedTextLineExt extends "Extended Text Line"
 {
     fields
     {
@@ -7,13 +7,11 @@ tableextension 50104 ExtendedTextLineExt extends "Extended Text Line"
             Caption = 'Bold';
             DataClassification = ToBeClassified;
         }
-
         field(50101; Italic; Boolean)
         {
             Caption = 'Italic';
             DataClassification = ToBeClassified;
         }
-
         field(50102; Underline; Boolean)
         {
             Caption = 'Underline';

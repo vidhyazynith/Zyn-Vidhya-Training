@@ -1,4 +1,4 @@
-table 50103 ExtendedTextTable
+table 50103 Zyn_ExtendedTextTable
 {
     fields
     {
@@ -27,19 +27,17 @@ table 50103 ExtendedTextTable
         {
             Caption = 'Sales Document Type';
             DataClassification = CustomerContent;
-
         }
-        field(50104; "Type"; enum "Sales Invoice Text")
+        field(50104; "Type"; enum "Zyn_Sales Invoice Text")
         {
             Caption = 'Text Type';
             DataClassification = CustomerContent;
         }
         field(50105; "Code"; Code[100])
         {
-                Caption= 'code';
-                DataClassification =CustomerContent;
+            Caption = 'code';
+            DataClassification = CustomerContent;
         }
-
     }
     keys
     {
@@ -48,5 +46,4 @@ table 50103 ExtendedTextTable
             Clustered = true;
         }
     }
-
 }

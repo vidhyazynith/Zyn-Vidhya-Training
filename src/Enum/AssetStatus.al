@@ -1,4 +1,4 @@
-enum 50110 "Asset Status"
+enum 50110 "Zyn_Asset Status"
 {
     Extensible = true;
     value(0; " ")

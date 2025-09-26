@@ -1,15 +1,13 @@
-report 50120 "Expense Export Report"
+report 50120 "Zyn_Expense Export Report"
 {
     Caption = 'Expense Export Report';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     ProcessingOnly = true;
-
     dataset
     {
-        dataitem(Expense; "Expense Table")
+        dataitem(Expense; "Zyn_Expense Table")
         {
-
             trigger OnPreDataItem()
             begin
                 // Apply custom FromDate / ToDate filters
@@ -19,14 +17,12 @@ report 50120 "Expense Export Report"
                     SetRange("Date", FromDate, DMY2Date(31, 12, 9999))
                 else if (ToDate <> 0D) then
                     SetRange("Date", 0D, ToDate);
-
                 // Apply Category filter if selected
                 if CategoryFilter <> '' then
                     SetRange(Category, CategoryFilter);
             end;
 
             trigger OnAfterGetRecord()
-
             begin
                 // Write expense data to Excel buffer
                 ExcelBuf.NewRow();
@@ -40,7 +36,6 @@ report 50120 "Expense Export Report"
             end;
         }
     }
-
     requestpage
     {
         layout
@@ -60,13 +55,12 @@ report 50120 "Expense Export Report"
                     field("Category"; CategoryFilter)
                     {
                         ApplicationArea = All;
-                        TableRelation = "Category Table".Name; // assuming you have Category master table
+                        TableRelation = "Zyn_Category Table".Name; // assuming you have Category master table
                     }
                 }
             }
         }
     }
-
     var
         ExcelBuf: Record "Excel Buffer" temporary;
         FromDate: Date;
@@ -87,7 +81,6 @@ report 50120 "Expense Export Report"
 
     trigger OnPostReport()
     begin
-
         // Add Total Row
         ExcelBuf.NewRow();
         ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
@@ -95,7 +88,6 @@ report 50120 "Expense Export Report"
         ExcelBuf.AddColumn(TotalAmount, FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
         ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-
         ExcelBuf.CreateNewBook('Expense Export');
         ExcelBuf.WriteSheet('Expenses', CompanyName, UserId);
         ExcelBuf.CloseBook();

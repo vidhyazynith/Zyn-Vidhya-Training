@@ -1,9 +1,8 @@
-page 50142 "Index List Part"
+page 50142 "Zyn_Index ListPart"
 {
     PageType = ListPart;
-    SourceTable = "Index List Part";
+    SourceTable = "Zyn_Index ListPart Table";
     Editable = false;
-
     layout
     {
         area(content)
@@ -13,12 +12,10 @@ page 50142 "Index List Part"
                 field("Year"; rec.Year)
                 {
                     ApplicationArea = All;
-                    Caption = 'Year';
                 }
                 field(Value; rec.Value)
                 {
                     ApplicationArea = All;
-                    Caption = 'Value';
                 }
             }
         }

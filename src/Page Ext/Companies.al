@@ -1,7 +1,7 @@
 namespace DefaultPublisher.ALProject4;
 
 using Microsoft.Foundation.Company;
-pageextension 50120 CompaniesListExt extends Companies
+pageextension 50120 Zyn_CompaniesListExt extends Companies
 {
     actions
     {
@@ -12,9 +12,8 @@ pageextension 50120 CompaniesListExt extends Companies
                 ApplicationArea = All;
                 Caption = 'Update Field';
                 Image = Edit;
-                RunObject = page "UpdatePage";
+                RunObject = page Zyn_UpdateField;
             }
         }
-        
     }
 }

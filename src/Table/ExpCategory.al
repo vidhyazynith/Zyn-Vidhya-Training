@@ -1,4 +1,4 @@
-table 50146 "Category Table"
+table 50146 "Zyn_Category Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -11,7 +11,7 @@ table 50146 "Category Table"
         field(2; "Name"; Code[100])
         {
             Caption = 'Name';
-            DataClassification =  CustomerContent;
+            DataClassification = CustomerContent;
         }
         field(3; "Description"; Text[50])
         {
@@ -19,7 +19,6 @@ table 50146 "Category Table"
             DataClassification = CustomerContent;
         }
     }
-
     keys
     {
         key(PK; Name)
@@ -31,7 +30,6 @@ table 50146 "Category Table"
     {
         fieldgroup(DropDown; Name)
         {
- 
         }
     }
 }

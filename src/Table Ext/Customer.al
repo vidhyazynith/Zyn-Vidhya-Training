@@ -1,4 +1,4 @@
-tableextension 50100 CustomerExt extends Customer
+tableextension 50100 Zyn_CustomerExt extends Customer
 {
     fields
     {
@@ -7,7 +7,6 @@ tableextension 50100 CustomerExt extends Customer
             Caption = 'Credit Allowed';
             DataClassification = CustomerContent;
         }
-
         field(50101; "Credit Used"; Decimal)
         {
             Caption = 'Credit Used';
@@ -18,9 +17,7 @@ tableextension 50100 CustomerExt extends Customer
         {
             Caption = 'Sales Year';
             FieldClass = FlowFilter;
-
         }
-        
         //field(50103; "Sales Amount"; Decimal)
         //{
         //    Caption = 'Sales Amount';
@@ -43,21 +40,19 @@ tableextension 50100 CustomerExt extends Customer
     var
         RecRef, xRecRef : RecordRef;
         FieldRef, xFieldRef : FieldRef;
-        LogEntry: Record "Customer Modify Log";
+        LogEntry: Record Zyn_CustomerModifyLogTable;
         i: Integer;
         FieldName: Text;
     begin
         RecRef.GetTable(Rec);
         xRecRef.GetTable(xRec);
-
         for i := 1 to RecRef.FieldCount do begin
             FieldRef := RecRef.FieldIndex(i);
             xFieldRef := xRecRef.FieldIndex(i);
             FieldName := FieldRef.Name;
             begin
                 if Format(FieldRef.Value) <> Format(xFieldRef.Value) then begin
-                        
-                    LogEntry."Entry No." := 0; // AutoIncrement field, will be set automatically
+                    LogEntry."Entry No." := 0;
                     LogEntry."Customer Number" := Rec."No.";
                     LogEntry."Field Name" := FieldRef.Caption();
                     LogEntry."Old Value" := Format(xFieldRef.Value);
@@ -68,5 +63,4 @@ tableextension 50100 CustomerExt extends Customer
             end;
         end;
     end;
-
 }

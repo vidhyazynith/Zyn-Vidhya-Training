@@ -1,21 +1,15 @@
-PAGE 50112 UpdatePage
+PAGE 50112 Zyn_UpdateField
 {
-
     layout
     {
-
-
         area(Content)
         {
-
-
             field(TableName; TableName)
             {
                 Caption = 'TableName';
                 ApplicationArea = All;
                 TableRelation = "AllObjWithCaption"."Object ID" where("Object Type" = const(Table));
             }
-
             field(FieldName; FieldName)
             {
                 Caption = 'FieldName';
@@ -26,15 +20,13 @@ PAGE 50112 UpdatePage
                 var
                     RecRef: RecordRef;
                     FieldRef: FieldRef;
-                    TempBuffer: Record "Field Lookup Buffer" temporary;
+                    TempBuffer: Record "Zyn_Field Lookup Buffer" temporary;
                     i: Integer;
                     FN: Text[250];
                 begin
                     if TableName = 0 then
                         Error('Please select a table first.');
-
                     RecRef.Open(TableName);
-
                     for i := 1 to RecRef.FieldCount do begin
                         FieldRef := RecRef.FieldIndex(i);
                         TempBuffer.Init();
@@ -43,70 +35,58 @@ PAGE 50112 UpdatePage
                         TempBuffer."Field Name" := FN;
                         TempBuffer.Insert();
                     end;
-
                     RecRef.Close();
-
-                    if Page.RunModal(Page::"Field Lookup Buffer Page", TempBuffer, selectcust) = Action::LookupOK then begin
+                    if Page.RunModal(Page::Zyn_FieldLookupBufferPage, TempBuffer, selectcust) = Action::LookupOK then begin
                         FieldID := TempBuffer.ID;
                         FieldName := TempBuffer."Field Name";
                     end;
                     Message('Selected Table ID is: %1', TableName);
-
                 end;
-
             }
             field(RecordSecltion; RecordSecltion)
             {
                 Caption = 'Record';
                 ApplicationArea = All;
                 trigger OnDrillDown()
-var
-    RecRef: RecordRef;
-    FieldRef: FieldRef;
-    TempValueBuffer: Record "Field Lookup Buffer" temporary;
-    LineNo: Integer;
-    SelectedLineNo: Integer;
-    SelectedText: Text[250];
-begin
-    if (TableName = 0) OR (fieldid = 0) then
-        Error('Please select a table and field first.');
-
-    RecRef.Open(TableName);
-    FieldRef := RecRef.Field(fieldid);
-
-    LineNo := 0;
-    repeat
-        LineNo += 1;
-        TempValueBuffer.Init();
-        TempValueBuffer.ID := LineNo;
-        TempValueBuffer."Field Name" := Format(FieldRef.Value);
-        TempValueBuffer.Insert();
-    until RecRef.Next() = 0;
-
-    // Store record position before closing
-    if Page.RunModal(Page::"Field Lookup Buffer Page", TempValueBuffer, selectcust) = Action::LookupOK then begin
-        SelectedLineNo := TempValueBuffer.ID;
-        SelectedText := TempValueBuffer."Field Name";
-    end;
-
-    RecRef.Close();
-
-    // Reopen the RecRef to fetch the actual record by line number
-    if SelectedLineNo > 0 then begin
-        LineNo := 0;
-        RecRef.Open(TableName);
-        repeat
-            LineNo += 1;
-        until (LineNo = SelectedLineNo) or (RecRef.Next() = 0);
-
-        RecordID := RecRef.RecordId;
-        RecordSecltion := SelectedText;
-        RecRef.Close();
-    end;
-end;
-
+                var
+                    RecRef: RecordRef;
+                    FieldRef: FieldRef;
+                    TempValueBuffer: Record "Zyn_Field Lookup Buffer" temporary;
+                    LineNo: Integer;
+                    SelectedLineNo: Integer;
+                    SelectedText: Text[250];
+                begin
+                    if (TableName = 0) OR (fieldid = 0) then
+                        Error('Please select a table and field first.');
+                    RecRef.Open(TableName);
+                    FieldRef := RecRef.Field(fieldid);
+                    LineNo := 0;
+                    repeat
+                        LineNo += 1;
+                        TempValueBuffer.Init();
+                        TempValueBuffer.ID := LineNo;
+                        TempValueBuffer."Field Name" := Format(FieldRef.Value);
+                        TempValueBuffer.Insert();
+                    until RecRef.Next() = 0;
+                    // Store record position before closing
+                    if Page.RunModal(Page::Zyn_FieldLookupBufferPage, TempValueBuffer, selectcust) = Action::LookupOK then begin
+                        SelectedLineNo := TempValueBuffer.ID;
+                        SelectedText := TempValueBuffer."Field Name";
+                    end;
+                    RecRef.Close();
+                    // Reopen the RecRef to fetch the actual record by line number
+                    if SelectedLineNo > 0 then begin
+                        LineNo := 0;
+                        RecRef.Open(TableName);
+                        repeat
+                            LineNo += 1;
+                        until (LineNo = SelectedLineNo) or (RecRef.Next() = 0);
+                        RecordID := RecRef.RecordId;
+                        RecordSecltion := SelectedText;
+                        RecRef.Close();
+                    end;
+                end;
             }
-
             field(Value_To_Enter; Value_To_Enter)
             {
                 Caption = 'New Value';
@@ -116,10 +96,7 @@ end;
                     UpdateFieldValue();
                 end;
             }
-
         }
-
-
     }
     var
         TableName: Integer;
@@ -130,30 +107,7 @@ end;
         FieldID: Integer;
         Object: Integer;
         selectcust: Integer;
-
-        RecordID: RecordId  ;
-
-
-
-
-    // procedure ListFieldsFromTable(TableID: Integer)
-    // var
-    //     RecRef: RecordRef;
-    //     FieldRef: FieldRef;
-    //     i: Integer;
-    //     MsgText: Text;
-    // begin
-    //     RecRef.Open(TableID); // Open the table dynamically using Table ID
-
-    //     for i := 1 to RecRef.FieldCount do begin
-    //         FieldRef := RecRef.FieldIndex(i);
-    //     end;
-    //     FieldRef := RecRef.FieldIndex(i);
-
-
-    //     RecRef.Close;
-    // end;
-
+        RecordID: RecordId;
 
     local procedure UpdateFieldValue()
     var
@@ -162,21 +116,16 @@ end;
         IntValue: Integer;
         DecValue: Decimal;
         DateValue: Date;
-
         RecId: RecordId;
-
     begin
         if TableName = 0 then
             Error('Please select a table first.');
         if FieldID = 0 then
             Error('Please select a field.');
-
         if RecordID.TableNo <> 0 then begin
-
             RecRef.Open(TableName);
             RecRef.Get(RecordID);
             FieldRef := RecRef.Field(FieldID);
-
             // Handle different field types
             case FieldRef.Type of
                 FieldType::Text, FieldType::Code:
@@ -202,7 +151,6 @@ end;
                 else
                     Error('Field type not supported for update.');
             end;
-
             RecRef.Modify();
             Message('Field %1 has been updated to %2 in table %3.', FieldName, Value_To_Enter, TableName);
             RecRef.Close();

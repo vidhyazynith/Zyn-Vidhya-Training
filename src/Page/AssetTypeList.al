@@ -1,10 +1,10 @@
-page 50146 "Asset Type List"
+page 50146 "Zyn_Asset Type List"
 {
     PageType = List;
-    SourceTable ="Asset Type table";
+    SourceTable = "Zyn_Asset Type table";
     ApplicationArea = ALL;
     Caption = 'Asset Type List';
-    CardPageID = "Asset Type Card"; 
+    CardPageID = "Zyn_Asset Type Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -16,7 +16,9 @@ page 50146 "Asset Type List"
             repeater(Group)
             {
                 field("Asset Type Id"; Rec."Asset Type ID")
-                { }
+                {
+
+                }
                 field("Asset Category"; Rec."Asset Category")
                 {
                     ApplicationArea = All;
@@ -25,8 +27,7 @@ page 50146 "Asset Type List"
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
-    }  
+    }
 }

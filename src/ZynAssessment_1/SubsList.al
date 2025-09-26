@@ -1,14 +1,13 @@
-page 50158 "ZYN_Subscription List"
+page 50158 "Zyn_Subscription List"
 {
     PageType = List;
-    SourceTable ="ZYN_Subscription Table";
+    SourceTable = "Zyn_Subscription table";
     ApplicationArea = ALL;
     Caption = 'Subscription List';
-    CardPageID = "ZYN_Subscription Card"; 
+    CardPageID = "Zyn_Subscription Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -17,7 +16,7 @@ page 50158 "ZYN_Subscription List"
             {
                 field("SubId"; Rec."Sub ID")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("CustId"; Rec.CustomerId)
                 {
@@ -56,11 +55,7 @@ page 50158 "ZYN_Subscription List"
                     ApplicationArea = All;
                     Editable = false;
                 }
-                
-                }
-
-
             }
-
+        }
     }
 }

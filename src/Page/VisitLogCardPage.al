@@ -1,12 +1,7 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-
-page 50103 "Customer Visit Log Card"
+page 50103 "Zyn_Customer Visit Log Card"
 {
     PageType = Card;
-    SourceTable = "Customer Visit Log";
+    SourceTable = "Zyn_Customer VisitLog Table";
     ApplicationArea = All;
     layout
     {
@@ -34,7 +29,6 @@ page 50103 "Customer Visit Log Card"
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
     }

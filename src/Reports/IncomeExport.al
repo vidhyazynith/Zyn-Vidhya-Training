@@ -1,15 +1,13 @@
-report 50123 "Income Export Report"
+report 50123 "Zyn_Income Export Report"
 {
     Caption = 'Income Export Report';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     ProcessingOnly = true;
-
     dataset
     {
-        dataitem(Income; "Income Table")
+        dataitem(Income; "Zyn_Income Table")
         {
-
             trigger OnPreDataItem()
             begin
                 // Apply custom FromDate / ToDate filters
@@ -19,14 +17,12 @@ report 50123 "Income Export Report"
                     SetRange("Date", FromDate, DMY2Date(31, 12, 9999))
                 else if (ToDate <> 0D) then
                     SetRange("Date", 0D, ToDate);
-
                 // Apply Category filter if selected
                 if CategoryFilter <> '' then
                     SetRange(Category, CategoryFilter);
             end;
 
             trigger OnAfterGetRecord()
-
             begin
                 // Write expense data to Excel buffer
                 ExcelBuf.NewRow();
@@ -40,7 +36,6 @@ report 50123 "Income Export Report"
             end;
         }
     }
-
     requestpage
     {
         layout
@@ -60,13 +55,12 @@ report 50123 "Income Export Report"
                     field("Category"; CategoryFilter)
                     {
                         ApplicationArea = All;
-                        TableRelation = "Income Category Table".Name; // assuming you have Category master table
+                        TableRelation = "Zyn_Income Category Table".Name;
                     }
                 }
             }
         }
     }
-
     var
         ExcelBuf: Record "Excel Buffer" temporary;
         FromDate: Date;
@@ -87,7 +81,6 @@ report 50123 "Income Export Report"
 
     trigger OnPostReport()
     begin
-
         // Add Total Row
         ExcelBuf.NewRow();
         ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
@@ -95,7 +88,6 @@ report 50123 "Income Export Report"
         ExcelBuf.AddColumn(TotalAmount, FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
         ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-
         ExcelBuf.CreateNewBook('Income Export');
         ExcelBuf.WriteSheet('Incomes', CompanyName, UserId);
         ExcelBuf.CloseBook();

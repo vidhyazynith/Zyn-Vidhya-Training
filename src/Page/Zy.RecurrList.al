@@ -1,12 +1,12 @@
-page 50122 "Recurr Exp List"
+page 50122 Zyn_RecurringExpenseList
 {
     PageType = List;
-    ApplicationArea = All; 
-    SourceTable = "Recurring Expense";
+    ApplicationArea = All;
+    SourceTable = Zyn_RecurringExpenseTable;
     InsertAllowed = false;
     ModifyAllowed = false;
     UsageCategory = Lists;
-    CardPageId = "Recurr Exp Card";
+    CardPageId = Zyn_RecurringExpenseCard;
     Caption = 'Recurring Expense List';
 
     layout

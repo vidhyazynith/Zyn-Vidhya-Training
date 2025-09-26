@@ -1,4 +1,4 @@
-pageextension 50100 CustomerCardExtExt extends "Customer Card"
+pageextension 50100 Zyn_CustomerCardExt extends "Customer Card"
 {
     layout
     {
@@ -8,7 +8,6 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
             {
                 ApplicationArea = All;
             }
-
             field("Credit Used"; Rec."Credit Used")
             {
                 ApplicationArea = All;
@@ -32,20 +31,16 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
                 ApplicationArea = All;
                 Editable = false;
             }
-
         }
         addfirst(factboxes)
         {
-            
-            part("Cust Fact box";"Cust Fact box")
+            part("Cust Fact box"; Zyn_CustomerFactBox)
             {
                 SubPageLink = "No." = field("No.");
                 ApplicationArea = All;
             }
         }
-
     }
-
     actions
     {
         addlast(processing)
@@ -55,7 +50,7 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
                 ApplicationArea = All;
                 Caption = 'Customer Visit Log';
                 Image = View;
-                RunObject = page "Customer Visit Log List";
+                RunObject = page Zyn_CustomerVisitLogList;
                 RunPageLink = "Customer Number" = field("No.");
             }
             action(ModifyLog)
@@ -63,7 +58,7 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
                 ApplicationArea = All;
                 Caption = 'Modify Visit Log';
                 Image = Edit;
-                RunObject = page "Customer Modify Log List";
+                RunObject = page Zyn_CustomerModifyLogList;
                 RunPageLink = "Customer Number" = field("No.");
             }
             action(Problem)
@@ -73,7 +68,7 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
                 Image = Create;
                 trigger OnAction()
                 var
-                    ProblemRec: Record Complaint;
+                    ProblemRec: Record "Zyn_Complaint Table";
                     CustomerRec: Record Customer;
                 begin
                     CustomerRec.Get(Rec."No.");
@@ -81,15 +76,11 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
                     ProblemRec."Customer ID" := CustomerRec."No.";
                     ProblemRec."customer Name" := CustomerRec."Name";
                     ProblemRec.Insert(true);
-                    Page.Run(Page::"Problem Page", ProblemRec);
+                    Page.Run(Page::Zyn_CompliantCard, ProblemRec);
                 end;
-                //RunObject = page "Problem Page";
-                
             }
         }
-
     }
-    
     trigger OnOpenPage()
     begin
         if rec."No." = '' then
@@ -106,45 +97,13 @@ pageextension 50100 CustomerCardExtExt extends "Customer Card"
 
     trigger OnClosePage()
     var
-        publisherMessage: Codeunit "Company Publisher";
+        publisherMessage: Codeunit "Zyn_NewCompanyPublisher";
     begin
         if IsNewCustomer and (rec.Name <> '') then begin
             publisherMessage.NewCompanyCreated(Rec);
         end;
     end;
+
     var
         IsNewCustomer: Boolean;
-        
-}
-
-
-pageextension 50110 CustomerCardExt extends "Customer Card"
-{
-    trigger OnOpenPage()
-    begin
-        if rec."No." = ''then
-        IsNewCustomer := true;
-    end;
-    trigger OnQueryClosePage(CloseAction: Action): Boolean
-    begin
-        if IsNewCustomer and (Rec.Name='')then
-        begin
-            Message('please enter the name of the customer');
-            exit(false);
-        end;
-    end;
-   
-    trigger OnClosePage()
-    var
-        publisherMessage: Codeunit customerNewPub;
-    begin
-        if IsNewCustomer and (rec.Name<> '') then begin
-            publisherMessage.OnAfterNewCustomerCreated(Rec.Name);
-        end;
-    end;
-
- 
-    var
-        IsNewCustomer: Boolean;
- 
 }

@@ -1,18 +1,16 @@
-report 50102 "Batch Posted Sales Invoice"
+report 50102 Zyn_BatchPostedSalesInvoice
 {
     Caption = 'Batch Posting';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     ProcessingOnly = true;
-
     dataset
     {
-        dataitem("SalesInvoice";"Sales Header")
+        dataitem("SalesInvoice"; "Sales Header")
         {
             DataItemTableView = where("Document Type" = const(Invoice));
         }
     }
-
     trigger OnPostReport()
     var
         SalesPost: Codeunit "Sales-Post";

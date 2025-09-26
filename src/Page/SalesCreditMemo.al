@@ -1,17 +1,12 @@
-namespace DefaultPublisher.ALProject4;
-
-using Microsoft.Sales.Document;
-using Microsoft.Sales.History;
-page 50141 "Sales Credit Memo List Part"
+page 50141 Zyn_SalesCreditMemoListPart
 {
     PageType = ListPart;
     SourceTable = "Sales Header";
-    SourceTableView= where("Document Type" = const("Credit Memo"));
+    SourceTableView = where("Document Type" = const("Credit Memo"));
     ApplicationArea = All;
     Editable = false;
     InsertAllowed = false;
     Caption = 'Sales Credit Memo';
-
     layout
     {
         area(Content)
@@ -34,8 +29,6 @@ page 50141 "Sales Credit Memo List Part"
                 {
                     ApplicationArea = All;
                 }
-            
-                
             }
         }
     }

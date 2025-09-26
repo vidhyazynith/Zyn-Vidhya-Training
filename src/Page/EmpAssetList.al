@@ -1,25 +1,22 @@
-page 50153 "EmpAssetList"
+page 50153 "Zyn_Employee Asset list"
 {
     PageType = List;
-    SourceTable ="Employee Asset Table";
+    SourceTable = "Zyn_Employee Asset Table";
     ApplicationArea = ALL;
     Caption = 'Employee Asset List';
-    CardPageID = "Employee Asset Card"; 
+    CardPageID = "Zyn_Employee Asset Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
         {
             repeater(Group)
             {
-                // field("Employee Asset Id"; Rec."Emp. Ass ID")
-                // { }
                 field("Employee ID"; Rec."Employee ID")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("Serial No"; Rec."Serial No")
                 {
@@ -45,15 +42,14 @@ page 50153 "EmpAssetList"
                 {
                     ApplicationArea = All;
                 }
-                
-                }
-
-
             }
+        }
         area(FactBoxes)
         {
-            part(AssetHis; "Asset history Factbox") { 
-                ApplicationArea = All;  }
+            part(AssetHis; Zyn_AssetHistoryFactbox)
+            {
+                ApplicationArea = All;
+            }
         }
-}
+    }
 }

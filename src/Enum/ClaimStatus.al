@@ -1,4 +1,4 @@
-enum 50112 "ZYN_Claim_Status"
+enum 50112 "Zyn_Claim Status"
 {
     Extensible = true;
     value(0; " ")

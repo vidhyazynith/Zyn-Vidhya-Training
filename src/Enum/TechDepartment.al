@@ -1,5 +1,4 @@
-namespace microsoft.purchase.document;
-enum 50101 "Technician Department"
+enum 50101 "Zyn_Technician Department"
 {
     Extensible = true;
     value(0; IT)

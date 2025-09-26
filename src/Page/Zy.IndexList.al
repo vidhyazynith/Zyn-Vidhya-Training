@@ -1,10 +1,10 @@
-page 50110 "Index List Page"
+page 50110 "Zyn_Index List"
 {
     PageType = List;
-    SourceTable ="Index table";
+    SourceTable = "Zyn_Index table";
     ApplicationArea = ALL;
     Caption = 'Index List';
-    CardPageID = "Index Card Page"; 
+    CardPageID = "Zyn_Index Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -19,7 +19,7 @@ page 50110 "Index List Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }

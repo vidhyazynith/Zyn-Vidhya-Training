@@ -1,14 +1,9 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-
-page 50107 "Technician Log Card"
+page 50107 "Zyn_Technician Log Card"
 {
     PageType = Card;
-    SourceTable = "Technician Log";
+    SourceTable = "Zyn_Technician Log Table";
     ApplicationArea = All;
-    Editable= true;
+    Editable = true;
     Caption = 'Technician Log Card';
     layout
     {
@@ -19,22 +14,18 @@ page 50107 "Technician Log Card"
                 field("ID"; Rec."Technician ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'Technician ID';
                 }
                 field("Name"; Rec."Technician Name")
                 {
                     ApplicationArea = All;
-                    Caption = 'Technician Name';
                 }
                 field("Department"; Rec."Department")
                 {
                     ApplicationArea = All;
-                    Caption = 'Department';
                 }
-                field("Phone No.";Rec."Phone No.")
+                field("Phone No."; Rec."Phone No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Phone No.';
                 }
             }
         }

@@ -1,4 +1,4 @@
-table 50140 "Index List Part"
+table 50140 "Zyn_Index ListPart Table"
 {
     fields
     {

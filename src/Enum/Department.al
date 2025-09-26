@@ -1,8 +1,10 @@
-enum 50105 "Department"
+enum 50105 "Zyn_Employee Department"
 {
     Extensible = true;
-
-    value(0; " ") { Caption = ' '; }
+    value(0; " ")
+    {
+        Caption = ' ';
+    }
     value(1; IT)
     {
         Caption = 'IT';

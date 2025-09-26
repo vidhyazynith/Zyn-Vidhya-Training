@@ -1,15 +1,15 @@
-pageextension 50115 CustomerListExt extends "Customer List"
+pageextension 50115 Zyn_CustomerListExt extends "Customer List"
 {
     layout
     {
         addfirst(factboxes)
         {
-            part("Cust Fact box";"Cust Fact box")
+            part("Cust Fact box"; Zyn_CustomerFactBox)
             {
                 SubPageLink = "No." = field("No.");
                 ApplicationArea = All;
             }
-            part(CustomerSubscriptions; "Customer Subscription FactBox")
+            part(CustomerSubscriptions; Zyn_CustomerSubscripFactBox)
             {
                 ApplicationArea = All;
                 SubPageLink = "No." = field("No.");

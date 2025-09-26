@@ -31,7 +31,7 @@ table 50122 "ZYN_Expense Claim Table"
         {
             DataClassification = ToBeClassified;
             Caption = 'Employee ID';
-            TableRelation = "Employee Table"."Employee ID";
+            TableRelation = "Zyn_Employee Table"."Employee ID";
         }
         field(4; "Claim Date"; Date)
         {
@@ -58,7 +58,7 @@ table 50122 "ZYN_Expense Claim Table"
                     Error('Expense category not found or invalid combination.');
             end;
         }
-        field(6; "Status"; Enum "ZYN_Claim_Status")
+        field(6; "Status"; Enum "Zyn_Claim Status")
         {
             DataClassification = ToBeClassified;
             Caption = 'Status';
@@ -102,7 +102,6 @@ table 50122 "ZYN_Expense Claim Table"
             Caption = 'Rejected Reason';
         }
     }
-
     keys
     {
         key(PK; "Claim ID", "Employee ID")
@@ -131,7 +130,7 @@ table 50122 "ZYN_Expense Claim Table"
             Claim.SetRange("Sub Type", Rec."Sub Type");
             Claim.SetRange("Employee ID", Rec."Employee ID");
             Claim.SetRange(Status, Claim.Status::Approved);
-            Claim.SetRange("Claim Date",StartDate,EndDate);
+            Claim.SetRange("Claim Date", StartDate, EndDate);
             if Claim.FindSet() then
                 repeat
                     ApprovedAmount += Claim.Amount;
@@ -140,5 +139,4 @@ table 50122 "ZYN_Expense Claim Table"
             "Available Limit" := ClaimCategory.Limit - ApprovedAmount;
         end;
     end;
-
 }

@@ -1,4 +1,4 @@
-page 50162 "ZYN_Expense Claim Card"
+page 50162 "Zyn_Expense Claim Card"
 {
     PageType = Card;
     SourceTable = "ZYN_Expense Claim Table";
@@ -25,7 +25,7 @@ page 50162 "ZYN_Expense Claim Card"
                     var
                         ClaimCategory: Record "ZYN_Expense Claim Category";
                     begin
-                        if Page.RunModal(Page::"ZYN_Exp Claim Category List", ClaimCategory) = Action::LookupOK then begin
+                        if Page.RunModal(Page::"Zyn_ExpenseClaimCategoryList", ClaimCategory) = Action::LookupOK then begin
                             Rec.Category := ClaimCategory.CategoryName;   // fill category name
                             Rec."Sub Type" := ClaimCategory."Sub Type";   // fill sub type
                             //Recalculate available limit
@@ -64,7 +64,7 @@ page 50162 "ZYN_Expense Claim Card"
                     ApplicationArea = All;
                     trigger OnDrillDown()
                     var
-                        BillMgt: Codeunit "ZYN_Bill File Management";
+                        BillMgt: Codeunit "Zyn_Bill File Management";
                     begin
                         BillMgt.ViewBill(Rec);
                     end;
@@ -84,7 +84,6 @@ page 50162 "ZYN_Expense Claim Card"
                 }
             }
         }
-
     }
     actions
     {
@@ -96,7 +95,7 @@ page 50162 "ZYN_Expense Claim Card"
                 ApplicationArea = All;
                 trigger OnAction()
                 var
-                    BillMgt: Codeunit "ZYN_Bill File Management";
+                    BillMgt: Codeunit "Zyn_Bill File Management";
                 begin
                     BillMgt.UploadBill(Rec);
                 end;

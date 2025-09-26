@@ -1,8 +1,7 @@
-page 50115 "Beginning Text Credit Memo"
+page 50115 Zyn_BeginningTextCreditMemo
 {
     PageType = ListPart;
-    SourceTable = ExtendedTextTable;
-
+    SourceTable = Zyn_ExtendedTextTable;
     layout
     {
         area(content)
@@ -12,12 +11,10 @@ page 50115 "Beginning Text Credit Memo"
                 field("Line No."; rec."Line No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Line No.';
                 }
                 field(Text; rec."Text")
                 {
                     ApplicationArea = All;
-                    Caption = 'Text';
                 }
 
             }

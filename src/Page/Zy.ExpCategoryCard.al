@@ -1,10 +1,9 @@
-page 50134 "Category Card Page"
+page 50134 "Zyn_Category Card"
 {
     PageType = Card;
-    SourceTable = "Category Table";
+    SourceTable = "Zyn_Category Table";
     ApplicationArea = ALL;
     Caption = 'Category Card';
- 
     layout
     {
         area(content)

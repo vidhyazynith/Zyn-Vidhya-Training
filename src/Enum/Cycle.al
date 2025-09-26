@@ -1,4 +1,4 @@
-enum 50104 "Cycle"
+enum 50104 "Zyn_Recurring Expense Cycle"
 {
     Extensible = true;
     value(0; Weekly)

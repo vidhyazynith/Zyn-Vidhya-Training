@@ -1,4 +1,4 @@
-tableextension 50145 customersextension extends Item
+tableextension 50145 Zyn_ItemExt extends Item
 {
     fields
     {

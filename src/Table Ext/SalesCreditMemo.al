@@ -1,4 +1,4 @@
-tableextension 50113 PostedSalesCreditMemoTableExt extends "Sales Cr.Memo Header"
+tableextension 50113 "Zyn_PostedSalesCr.MemoExt" extends "Sales Cr.Memo Header"
 {
     fields
     {
@@ -7,7 +7,6 @@ tableextension 50113 PostedSalesCreditMemoTableExt extends "Sales Cr.Memo Header
             Caption = 'Beginning Text';
             DataClassification = CustomerContent;
             TableRelation = "Standard Text"."Code";
-
         }
         field(50102; "Ending Text"; Text[250])
         {
@@ -16,6 +15,4 @@ tableextension 50113 PostedSalesCreditMemoTableExt extends "Sales Cr.Memo Header
             TableRelation = "Standard Text"."Code";
         }
     }
-
-
 }

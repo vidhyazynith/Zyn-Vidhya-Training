@@ -1,14 +1,13 @@
-page 50151 "AssetList"
+page 50151 Zyn_AssetList
 {
     PageType = List;
-    SourceTable ="Assets Table";
+    SourceTable = "Zyn_Assets Table";
     ApplicationArea = ALL;
     Caption = 'Asset List';
-    CardPageID = "AssetCard"; 
+    CardPageID = Zyn_AssetCard;
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -16,10 +15,12 @@ page 50151 "AssetList"
             repeater(Group)
             {
                 field("Asset Id"; Rec."Asset ID")
-                { ApplicationArea = All;}
+                {
+                    ApplicationArea = All;
+                }
                 field("Asset Type"; Rec."Asset Type")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("Serial No"; Rec."Serial No")
                 {
@@ -36,13 +37,11 @@ page 50151 "AssetList"
                 field("Available"; Rec.Available)
                 {
                     ApplicationArea = All;
-                    
-                }
 
+                }
             }
         }
-    }  
-
+    }
     trigger OnAfterGetRecord()
     begin
         Rec.UpdateAvailability();

@@ -1,11 +1,7 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-page 50108 "Customer Modify Log List"
+page 50108 Zyn_CustomerModifyLogList
 {
     PageType = List;
-    SourceTable = "Customer Modify Log";
+    SourceTable = Zyn_CustomerModifyLogTable;
     ApplicationArea = All;
     InsertAllowed = false;
     Editable = False;
@@ -19,12 +15,10 @@ page 50108 "Customer Modify Log List"
                 {
                     ApplicationArea = All;
                 }
-
                 field("Customer Number"; Rec."Customer Number")
                 {
                     ApplicationArea = All;
                 }
-
                 field("Field Name"; Rec."Field Name")
                 {
                     ApplicationArea = All;
@@ -41,7 +35,6 @@ page 50108 "Customer Modify Log List"
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
     }

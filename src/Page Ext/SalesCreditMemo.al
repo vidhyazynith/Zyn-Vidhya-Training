@@ -1,4 +1,3 @@
-// Page Extension for Posted Sales Invoice
 pageextension 50112 "SalesCreditMemoExt" extends "Sales Credit Memo"
 {
     layout
@@ -13,12 +12,12 @@ pageextension 50112 "SalesCreditMemoExt" extends "Sales Credit Memo"
                     trigger OnValidate()
                     var
                         SalesHeaderRec: Record "Sales Header";
-                        ExtTextHandler: Codeunit "Extended Text Handler";
-                        Type: Enum "Sales Invoice Text";
+                        ExtTextHandler: Codeunit "Zyn_Extended Text Handler";
+                        Type: Enum "Zyn_Sales Invoice Text";
                     begin
                         Type := Type::Beginning;
                         SalesHeaderRec := Rec;
-                        ExtTextHandler.LoadExtendedTextGeneric(Rec,Rec."Beginning Text",Type);
+                        ExtTextHandler.LoadExtendedTextGeneric(Rec, Rec."Beginning Text", Type);
                     end;
                 }
                 field("Ending Text"; Rec."Ending Text")
@@ -27,28 +26,28 @@ pageextension 50112 "SalesCreditMemoExt" extends "Sales Credit Memo"
                     trigger OnValidate()
                     var
                         SalesHeaderRec: Record "Sales Header";
-                        ExtTextHandler: Codeunit "Extended Text Handler";
-                        Type: Enum "Sales Invoice Text";
+                        ExtTextHandler: Codeunit "Zyn_Extended Text Handler";
+                        Type: Enum "Zyn_Sales Invoice Text";
                     begin
                         Type := Type::Ending;
                         SalesHeaderRec := Rec;
-                        ExtTextHandler.LoadExtendedTextGeneric(Rec,Rec."Ending Text",Type);
+                        ExtTextHandler.LoadExtendedTextGeneric(Rec, Rec."Ending Text", Type);
                     end;
                 }
             }
         }
         addafter("Credit Memo Texts")
         {
-            part("Beginning Text Lines"; "Beginning Text Credit Memo") // your custom listpart
+            part("Beginning Text Lines"; Zyn_BeginningTextCreditMemo) // your custom listpart
             {
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("No."),Type = const(Beginning);
+                SubPageLink = "Document No." = FIELD("No."), Type = const(Beginning);
             }
 
-            part("Ending Text ListPart"; "Ending Text Credit Memo") // your custom listpart
+            part("Ending Text ListPart"; Zyn_EndingTextCreditMemo) // your custom listpart
             {
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("No."),Type = const(Ending);
+                SubPageLink = "Document No." = FIELD("No."), Type = const(Ending);
             }
 
         }

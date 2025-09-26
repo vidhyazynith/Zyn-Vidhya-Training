@@ -1,17 +1,12 @@
-namespace DefaultPublisher.ALProject4;
-using microsoft.Sales.Customer;
-using Microsoft.Sales.History;
-using Microsoft.Sales.Document;
-page 50140 "Sales Inv List Part"
+page 50140 Zyn_SalesInvoiceListPart
 {
     PageType = ListPart;
     SourceTable = "Sales Header";
-    SourceTableView = where("Document Type"= const("invoice"));
+    SourceTableView = where("Document Type" = const("invoice"));
     ApplicationArea = All;
     Editable = false;
     InsertAllowed = false;
     Caption = 'Sales Invoice';
-
     layout
     {
         area(Content)

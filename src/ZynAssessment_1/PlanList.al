@@ -1,14 +1,13 @@
-page 50155 "ZYN_Plan List"
+page 50155 "Zyn_Plan List"
 {
     PageType = List;
-    SourceTable ="ZYN_Plan Table";
+    SourceTable = "Zyn_Plan Table";
     ApplicationArea = ALL;
     Caption = 'Plan List';
-    CardPageID = "ZYN_Plan Card"; 
+    CardPageID = "Zyn_Plan Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -17,7 +16,7 @@ page 50155 "ZYN_Plan List"
             {
                 field("Plan ID"; Rec."Plan Id")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("Fee"; Rec.Fee)
                 {
@@ -35,11 +34,7 @@ page 50155 "ZYN_Plan List"
                 {
                     ApplicationArea = All;
                 }
-                
-                }
-
-
             }
-
+        }
     }
 }

@@ -1,20 +1,4 @@
-enum 50109 "Leave Approval Status"
-{
-    Extensible = true;
-    value(0; Pending)
-    {
-        Caption = 'Pending';
-    }
-    value(1; Approved)
-    {
-        Caption = 'Approved';
-    }
-    value(2; Rejected)
-    {
-        Caption = 'Rejected';
-    }
-}
-table 50108 "Leave Request Table"
+table 50108 "Zyn_Leave Request Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -29,10 +13,10 @@ table 50108 "Leave Request Table"
         {
             Caption = 'Employee ID';
             DataClassification = SystemMetadata;
-            TableRelation = "Employee Table"."Employee ID";
+            TableRelation = "Zyn_Employee Table"."Employee ID";
             trigger OnValidate()
             var
-                emp: Record "Employee Table";
+                emp: Record "Zyn_Employee Table";
             begin
                 UpdateHiddenTable();
                 emp.SetRange("Employee ID", Rec."Employee ID");
@@ -40,19 +24,15 @@ table 50108 "Leave Request Table"
                     Rec."Employee Name" := emp."Emp. Name";
             end;
         }
-        
-        field(3; 
-        
-        "Leave Category"; Text[20])
+        field(3; "Leave Category"; Text[20])
         {
             Caption = 'Leave Category';
             DataClassification = CustomerContent;
-            TableRelation = "Leave Category Table"."Category Name";
+            TableRelation = "Zyn_Leave Category Table"."Category Name";
             trigger OnValidate()
             begin
                 UpdateHiddenTable();
             end;
-
         }
         field(4; "Reason"; Text[50])
         {
@@ -69,37 +49,22 @@ table 50108 "Leave Request Table"
             Caption = 'End Date';
             DataClassification = CustomerContent;
             trigger OnValidate()
-
             begin
                 if ("Start Date" <> 0D) and ("End Date" <> 0D) then
                     Rec."Total Leave Taken" := "End Date" - "Start Date";
             end;
         }
-
         field(7; "Remaining Leave"; Integer)
         {
             Caption = 'Remaining Leave';
             FieldClass = FlowField;
-            CalcFormula = lookup("Employee Leave Table"."Remaining Leave" where("Employee ID" = field("Employee ID"),
+            CalcFormula = lookup("Zyn_Employee Leave Table"."Remaining Leave" where("Employee ID" = field("Employee ID"),
                 "Category Name" = field("Leave Category")));
-
         }
-        field(8; "Status"; Enum "Leave Approval Status")
+        field(8; "Status"; Enum "Zyn_Leave Approval Status")
         {
             Caption = 'Status';
             InitValue = Pending;
-    //         trigger OnValidate()
-    // var
-    //     EmpLeave: Record "Employee Leave Table";
-    // begin
-    //     // Only update Remaining Leave when the leave is Approved
-    //     if Rec.Status = Status::Approved then begin
-    //         if EmpLeave.Get("Employee ID", "Leave Category") then begin
-    //             EmpLeave.CalcRemainingDays();
-    //             EmpLeave.Modify(true);
-    //         end;
-    //     end;
-    // end;
         }
         field(9; "Total Leave Taken"; Integer)
         {
@@ -108,11 +73,8 @@ table 50108 "Leave Request Table"
         Field(10; "Employee Name"; Text[100])
         {
             DataClassification = ToBeClassified;
-            // TableRelation = EmployeeTable."Employee Name";
         }
-
     }
-
     keys
     {
         key(PK; "Leave Req ID", "Employee ID")
@@ -120,7 +82,6 @@ table 50108 "Leave Request Table"
             Clustered = true;
         }
     }
-
     trigger OnDelete()
     begin
         if Status <> Status::Pending then
@@ -129,11 +90,10 @@ table 50108 "Leave Request Table"
 
     local procedure UpdateHiddenTable()
     var
-        Hidden: Record "Employee Leave Table";
+        Hidden: Record "Zyn_Employee Leave Table";
     begin
         if ("Employee ID" = 0) or ("Leave Category" = '') then
             exit;
- 
         if Hidden.Get("Employee ID", "Leave Category") then begin
             Hidden."Employee Name" := "Employee Name";
             Hidden.Modify(true);
@@ -145,5 +105,4 @@ table 50108 "Leave Request Table"
             Hidden.Insert(true);
         end;
     end;
-
 }

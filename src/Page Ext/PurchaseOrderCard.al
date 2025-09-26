@@ -1,4 +1,4 @@
-pageextension 50101 PurchaseOrderCardExt extends "Purchase Order"
+pageextension 50101 Zyn_PurchaseOrderCardExt extends "Purchase Order"
 {
     layout
     {

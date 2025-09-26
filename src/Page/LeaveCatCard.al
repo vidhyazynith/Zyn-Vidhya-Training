@@ -1,10 +1,9 @@
-page 50133 "Leave Card Page"
+page 50133 "Zyn_Leave Card Page"
 {
     PageType = Card;
-    SourceTable ="Leave Category Table";
+    SourceTable = "Zyn_Leave Category Table";
     ApplicationArea = ALL;
     Caption = 'Leave Category Card';
-
     layout
     {
         area(content)
@@ -12,14 +11,14 @@ page 50133 "Leave Card Page"
             group(general)
             {
                 field("Category ID"; Rec."Leave Cat. ID")
-                { 
+                {
                     ApplicationArea = All;
                 }
                 field("Category Name"; Rec."Category Name")
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }
@@ -28,8 +27,6 @@ page 50133 "Leave Card Page"
                     ApplicationArea = All;
                 }
             }
-
         }
-
     }
 }

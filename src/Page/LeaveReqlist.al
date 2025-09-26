@@ -1,14 +1,13 @@
-page 50135 "Leave Req List Page"
+page 50135 "Zyn_Leave Request List"
 {
     PageType = List;
-    SourceTable = "Leave Request Table";
+    SourceTable = "Zyn_Leave Request Table";
     ApplicationArea = ALL;
     Caption = 'Leave Request List';
-    CardPageID = "Leave Request Card Page"; 
+    CardPageID = "Zyn_Leave Request Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
-    ModifyAllowed = false; 
-
+    ModifyAllowed = false;
     layout
     {
         area(content)
@@ -16,21 +15,21 @@ page 50135 "Leave Req List Page"
             repeater(Group)
             {
                 field("Leave Req. ID"; Rec."Leave Req ID")
-                { 
+                {
                     ApplicationArea = All;
                 }
                 field("Employee ID"; Rec."Employee ID")
                 {
                     ApplicationArea = All;
                 }
-                field("Leave category";Rec."Leave Category")
+                field("Leave category"; Rec."Leave Category")
                 {
                     ApplicationArea = All;
                 }
                 field("Reason"; Rec.Reason)
                 {
                     ApplicationArea = All;
-                }   
+                }
                 field("Start date"; Rec."Start Date")
                 {
                     ApplicationArea = All;
@@ -47,8 +46,7 @@ page 50135 "Leave Req List Page"
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
-    } 
+    }
 }

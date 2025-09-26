@@ -1,9 +1,9 @@
-page 50109 "Complaint ListPart"
+page 50109 "Zyn_Complaint ListPart"
 {
     PageType = ListPart;
-    SourceTable = "Complaint";
+    SourceTable = "Zyn_Complaint Table";
     ApplicationArea = All;
-
+    Caption = 'Complaint List';
     layout
     {
         area(content)
@@ -13,28 +13,22 @@ page 50109 "Complaint ListPart"
                 field("Customer ID"; rec."Customer ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'Customer ID';
                 }
                 field("Customer Name"; rec."Customer Name")
                 {
                     ApplicationArea = All;
-                    Caption = 'Customer Name';
                 }
                 field("Problem"; rec."Problem")
                 {
                     ApplicationArea = All;
-                    Caption = 'Problem';
                 }
-
                 field("Problem Description"; rec."Problem Description")
                 {
                     ApplicationArea = All;
-                    Caption = 'Problem Description';
                 }
                 field("Date"; rec."Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Date';
                 }
             }
         }

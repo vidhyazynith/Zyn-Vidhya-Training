@@ -1,12 +1,8 @@
-namespace DefaultPublisher.ALProject4;
-
-
-using Microsoft.Sales.Customer;
-page 50102 "Customer Visit Log List"
+page 50102 Zyn_CustomerVisitLogList
 {
     PageType = List;
-    SourceTable = "Customer Visit Log";
-    CardPageId = "Customer Visit Log Card";
+    SourceTable = "Zyn_Customer VisitLog Table";
+    CardPageId = "Zyn_Customer Visit Log Card";
     ApplicationArea = All;
     InsertAllowed = false;
     Editable = False;
@@ -36,7 +32,6 @@ page 50102 "Customer Visit Log List"
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
     }

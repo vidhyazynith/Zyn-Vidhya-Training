@@ -1,7 +1,6 @@
-codeunit 50130 "ZYN_Subscription Billing Mgt"
+codeunit 50130 "Zyn_Subscription Billing Mgt"
 {
     Subtype = Normal;
-
     trigger OnRun()
     begin
         ProcessSubscriptions();
@@ -9,7 +8,7 @@ codeunit 50130 "ZYN_Subscription Billing Mgt"
 
     local procedure ProcessSubscriptions()
     var
-        SubRec: Record "ZYN_Subscription table";
+        SubRec: Record "Zyn_Subscription table";
     begin
         SubRec.Reset();
         SubRec.SetRange("Subcrip. Status", SubRec."Subcrip. Status"::Active);
@@ -18,19 +17,15 @@ codeunit 50130 "ZYN_Subscription Billing Mgt"
                 // Only process if subscription is active and valid
                 if (SubRec."Next Billing Date" = WorkDate()) and
                    (SubRec."End date" >= WorkDate()) then begin
-
                     // Generate invoice
                     CreateSalesInvoice(SubRec);
-
                     // Advance billing date by 1 month
                     SubRec."Next Billing Date" := CalcDate('<1M>', SubRec."Next Billing Date");
-
                     // If the new billing date exceeds End Date -> expire subscription
                     if SubRec."Next Billing Date" > SubRec."End date" then begin
                         SubRec."Subcrip. Status" := SubRec."Subcrip. Status"::Expired;
                         SubRec."Next Billing Date" := 0D;
                     end;
-
                     SubRec.Modify(true);
                 end
                 else if (SubRec."End date" < WorkDate()) then begin
@@ -42,23 +37,21 @@ codeunit 50130 "ZYN_Subscription Billing Mgt"
             until SubRec.Next() = 0;
     end;
 
-    local procedure CreateSalesInvoice(SubRec: Record "ZYN_Subscription table")
+    local procedure CreateSalesInvoice(SubRec: Record "Zyn_Subscription table")
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
-        PlanRec: Record "ZYN_Plan Table";
-        Setup: Record "ZYN_Subscription Setup";
+        PlanRec: Record "Zyn_Plan Table";
+        Setup: Record "Zyn_Subscription Setup";
         NewNo: Code[20];
     begin
         // Ensure subscription is still active and valid
         if (SubRec."Subcrip. Status" <> SubRec."Subcrip. Status"::Active) or
            (SubRec."End date" < WorkDate()) then
             exit;
-
         // Get Plan Fee
         if not PlanRec.Get(SubRec."Plan Id") then
             exit;
-
         // Ensure setup exists
         if not Setup.Get('SETUP') then begin
             Setup.Init();
@@ -66,14 +59,11 @@ codeunit 50130 "ZYN_Subscription Billing Mgt"
             Setup."Last Invoice No." := 0;
             Setup.Insert();
         end;
-
         // Increment last invoice number
         Setup."Last Invoice No." += 1;
         Setup.Modify();
-
         // Build manual invoice no. like INV0001
-        NewNo :='INV' + COPYSTR('0000', 1, 4 - STRLEN(FORMAT(Setup."Last Invoice No."))) + FORMAT(Setup."Last Invoice No.");
-
+        NewNo := 'INV' + COPYSTR('0000', 1, 4 - STRLEN(FORMAT(Setup."Last Invoice No."))) + FORMAT(Setup."Last Invoice No.");
         // Create new Sales Invoice Header
         SalesHeader.Init();
         SalesHeader."Document Type" := SalesHeader."Document Type"::Invoice;
@@ -81,13 +71,12 @@ codeunit 50130 "ZYN_Subscription Billing Mgt"
         SalesHeader."No." := NewNo;
         SalesHeader."From Subscription" := true;
         SalesHeader.Insert(true);
-
         SalesLine.Init();
         SalesLine.Validate("Document Type", SalesHeader."Document Type"::Invoice);
         SalesLine.Validate("Document No.", SalesHeader."No.");
         SalesLine.Type := SalesLine.Type::" ";
         SalesLine.Description := 'Subscription Fee - ' + PlanRec."PlanName";
-        SalesLine.Validate(Amount,PlanRec.Fee);
+        SalesLine.Validate(Amount, PlanRec.Fee);
         SalesLine.Insert(true);
     end;
 }

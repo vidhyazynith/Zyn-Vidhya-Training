@@ -1,4 +1,4 @@
-enumextension 50100 "DocumentTypeExt" extends "Sales Document Type"
+enumextension 50100 Zyn_SalesDocumentTypeExt extends "Sales Document Type"
 {
     value(50104; "Posted Invoice")
     {

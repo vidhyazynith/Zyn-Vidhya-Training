@@ -1,10 +1,9 @@
-page 50132 "Budget FactBox"
+page 50132 Zyn_BudgetFactBox
 {
     PageType = ListPart;
-    SourceTable = "Budget Table";
+    SourceTable = "Zyn_Budget Table";
     ApplicationArea = All;
     Caption = 'Category Budget';
-
     layout
     {
         area(content)
@@ -32,15 +31,13 @@ page 50132 "Budget FactBox"
     }
     trigger OnOpenPage()
     var
-
-    start : date;
-    ending : date;
-
+        start: date;
+        ending: date;
     begin
-        start := CalcDate('<-CM>',WorkDate());
-        ending  := CalcDate('<CM>',WorkDate());
+        start := CalcDate('<-CM>', WorkDate());
+        ending := CalcDate('<CM>', WorkDate());
 
-        Rec.SetRange("From Date",start);
-        Rec.SetRange("To Date",ending);
+        Rec.SetRange("From Date", start);
+        Rec.SetRange("To Date", ending);
     end;
 }

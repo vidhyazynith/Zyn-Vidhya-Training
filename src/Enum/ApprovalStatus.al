@@ -1,8 +1,7 @@
 //namespace microsoft.purchase.document;
-enum 50100 "Approval Status pur"
+enum 50100 "Zyn_Purchase Approval Status"
 {
     Extensible = true;
-
     value(0; Open)
     {
         Caption = 'Open';

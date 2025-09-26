@@ -1,10 +1,9 @@
-page 50145 "Income Card Page"
+page 50145 "Zyn_Income Card"
 {
     PageType = Card;
-    SourceTable ="Income table";
+    SourceTable = "Zyn_Income Table";
     ApplicationArea = ALL;
     Caption = 'Income Card';
-
     layout
     {
         area(content)
@@ -15,7 +14,7 @@ page 50145 "Income Card Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }
@@ -27,15 +26,12 @@ page 50145 "Income Card Page"
                 {
                     ApplicationArea = All;
                 }
-                 field("Category"; Rec."Category")
+                field("Category"; Rec."Category")
                 {
                     ApplicationArea = All;
                 }
-                
             }
-
         }
-
     }
     actions
     {
@@ -48,11 +44,9 @@ page 50145 "Income Card Page"
                 Image = New;
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"Category List Page");
+                    Page.Run(Page::"Zyn_Category List");
                 end;
             }
         }
-        
     }
-    
 }

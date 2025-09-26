@@ -1,4 +1,4 @@
-codeunit 50100 "PurchPostBlocker"
+codeunit 50100 "Zyn_Purchase Post Blocker"
 {
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforePostPurchaseDoc', '', true, true)]
     local procedure OnBeforePostPurchaseDoc(var PurchaseHeader: Record "Purchase Header")

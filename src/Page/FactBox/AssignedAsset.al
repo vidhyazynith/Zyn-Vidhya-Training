@@ -1,10 +1,9 @@
-page 50375 "Assigned Assets Factbox"
+page 50375 "Zyn_AssignedAssetsFactbox"
 {
     Caption = 'Assigned Assets';
     PageType = CardPart;
-    SourceTable = "Employee Table"; // Make sure this is your Employee table name
+    SourceTable = "Zyn_Employee Table";
     ApplicationArea = All;
-
     layout
     {
         area(content)
@@ -14,16 +13,14 @@ page 50375 "Assigned Assets Factbox"
                 field("Assigned Asset Count"; GetAssignedAssetCount())
                 {
                     ApplicationArea = All;
-
                     trigger OnDrillDown()
                     var
-                        EmpAssetRec: Record "Employee Asset Table";
-                        EmpAssetList: Page EmpAssetList;
+                        EmpAssetRec: Record "Zyn_Employee Asset Table";
+                        EmpAssetList: Page "Zyn_Employee Asset list";
                     begin
                         EmpAssetRec.Reset();
                         EmpAssetRec.SetRange("Employee ID", Rec."Employee ID");
                         EmpAssetRec.SetRange(Status, EmpAssetRec.Status::Assigned);
-
                         if EmpAssetRec.FindSet() then begin
                             EmpAssetList.SetTableView(EmpAssetRec);
                             EmpAssetList.Run();
@@ -34,10 +31,9 @@ page 50375 "Assigned Assets Factbox"
             }
         }
     }
-
     local procedure GetAssignedAssetCount(): Integer
     var
-        EmpAssetRec: Record "Employee Asset Table";
+        EmpAssetRec: Record "Zyn_Employee Asset Table";
     begin
         EmpAssetRec.SetRange("Employee ID", Rec."Employee ID");
         EmpAssetRec.SetRange(Status, EmpAssetRec.Status::Assigned);

@@ -1,4 +1,4 @@
-page 50163 "ZYN_Exp Claim Category List"
+page 50163 "Zyn_ExpenseClaimCategoryList"
 {
     PageType = List;
     SourceTable = "ZYN_Expense Claim Category";

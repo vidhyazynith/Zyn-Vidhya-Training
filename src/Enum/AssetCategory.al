@@ -1,4 +1,4 @@
-enum 50107 "Asset Category"
+enum 50107 "Zyn_Asset Category"
 {
     Extensible = true;
     value(0; " ")

@@ -1,10 +1,9 @@
-page 50136 "Income Category Card"
+page 50136 "Zyn_Income Category Card"
 {
     PageType = Card;
-    SourceTable = "Income Category Table";
+    SourceTable = "Zyn_Income Category Table";
     ApplicationArea = ALL;
     Caption = 'Income Category Card';
- 
     layout
     {
         area(content)

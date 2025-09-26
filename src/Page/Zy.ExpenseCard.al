@@ -1,10 +1,9 @@
-page 50148 "Expense Card Page"
+page 50148 "Zyn_Expense Card"
 {
     PageType = Card;
-    SourceTable ="Expense table";
+    SourceTable = "Zyn_Expense Table";
     ApplicationArea = ALL;
     Caption = 'Expense Card';
-
     layout
     {
         area(content)
@@ -15,11 +14,10 @@ page 50148 "Expense Card Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }
-            
                 field("Date"; Rec.Date)
                 {
                     ApplicationArea = All;
@@ -37,11 +35,8 @@ page 50148 "Expense Card Page"
                 {
                     ApplicationArea = All;
                 }
-                
             }
-
         }
-
     }
     actions
     {
@@ -54,42 +49,10 @@ page 50148 "Expense Card Page"
                 Image = New;
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"Category List Page");
+                    Page.Run(Page::"Zyn_Category List");
                 end;
             }
         }
-        
+
     }
-//     local procedure GetRemainingBudget(): Decimal;
-// var
-//     BudgetRec: Record "Budget Table";
-//     StartDate: Date;
-//     EndDate: Date;
-//     CurMonth: Integer;
-//     CurYear: Integer;
-// begin
-//     CurMonth := Date2DMY(WorkDate(), 2);
-//     CurYear := Date2DMY(WorkDate(), 3);
-//     // Get first and last day of the current WorkDate month
-//     StartDate := DMY2Date(1, CurMonth, CurYear); 
-//     EndDate := CalcDate('<CM>', StartDate);
-
-//     BudgetRec.Reset();
-//     BudgetRec.SetRange("Category", Rec."Category");
-//     BudgetRec.SetRange("From Date", StartDate); // Ensure budget is for current month
-//     BudgetRec.SetRange("To Date", EndDate);   // Some models use both fields
-
-//     if BudgetRec.FindFirst() then begin
-//         // Apply monthly filter for Total Expense flowfield
-//         BudgetRec.SetRange("Date Filter", StartDate, EndDate);
-//         BudgetRec.CalcFields("Total Expense");
-
-//         // Return monthly Budget - monthly Expense
-//         exit(BudgetRec."Budget Amount" - BudgetRec."Total Expense");
-//     end else
-//         exit(0); // no budget record found for this category/month
-// end;
-    
-
-    
 }

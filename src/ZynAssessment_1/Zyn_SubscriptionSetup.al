@@ -1,7 +1,6 @@
-table 50123 "ZYN_Subscription Setup"
+table 50123 "Zyn_Subscription Setup"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(1; "Primary Key"; Code[10])
@@ -14,9 +13,11 @@ table 50123 "ZYN_Subscription Setup"
             DataClassification = ToBeClassified;
         }
     }
-
     keys
     {
-        key(PK; "Primary Key") { Clustered = true; }
+        key(PK; "Primary Key")
+        {
+            Clustered = true;
+        }
     }
 }

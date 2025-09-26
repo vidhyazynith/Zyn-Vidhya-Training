@@ -1,4 +1,4 @@
-pageextension 50132 ItemCardExt extends "Item list"
+pageextension 50132 Zyn_ItemListExt extends "Item list"
 {
     layout
     {
@@ -7,7 +7,6 @@ pageextension 50132 ItemCardExt extends "Item list"
             field("Current Inventory"; rec."current inventory")
             {
                 ApplicationArea = All;
- 
             }
         }
     }

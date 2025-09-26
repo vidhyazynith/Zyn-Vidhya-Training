@@ -1,7 +1,4 @@
-namespace DefaultPublisher.ALProject4;
-using microsoft.Sales.Customer;
-using Microsoft.Sales.Document;
-page 50149 "Sales Ord List Part"
+page 50149 Zyn_SalesOrderListPart
 {
     PageType = ListPart;
     SourceTable = "sales header";
@@ -10,8 +7,6 @@ page 50149 "Sales Ord List Part"
     Editable = false;
     InsertAllowed = false;
     Caption = 'Sales Order';
-    
-
     layout
     {
         area(Content)

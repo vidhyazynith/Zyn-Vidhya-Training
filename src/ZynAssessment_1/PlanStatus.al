@@ -1,7 +1,6 @@
-enum 50108 "ZYN_Plan Status"
+enum 50108 "Zyn_Plan Status"
 {
     Extensible = true;
-
     value(0; " ")
     {
         Caption = '';

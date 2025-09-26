@@ -1,15 +1,14 @@
-page 50161 "ZYN_Exp Claim List"
+page 50161 "Zyn_Expense Claim List"
 {
     PageType = List;
     SourceTable = "ZYN_Expense Claim Table";
     ApplicationArea = ALL;
     Caption = 'Expense Claim List';
-    CardPageID = "ZYN_Expense Claim Card";
+    CardPageID = "Zyn_Expense Claim Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
     Editable = false;
-
     layout
     {
         area(content)
@@ -53,7 +52,7 @@ page 50161 "ZYN_Exp Claim List"
                     ApplicationArea = All;
                     trigger OnDrillDown()
                     var
-                        BillMgt: Codeunit "ZYN_Bill File Management";
+                        BillMgt: Codeunit "Zyn_Bill File Management";
                     begin
                         BillMgt.ViewBill(Rec);
                     end;

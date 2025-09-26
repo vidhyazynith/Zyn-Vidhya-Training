@@ -1,5 +1,4 @@
-namespace microsoft.purchase.document;
-enum 50102 "Available Problems"
+enum 50102 "Zyn_Available Problems"
 {
     Extensible = true;
     value(0; SoftwareIssue)

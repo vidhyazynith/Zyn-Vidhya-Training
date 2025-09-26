@@ -1,14 +1,13 @@
-page 50124 "Income Category List"
+page 50124 "Zyn_Income Category List"
 {
     PageType = List;
-    SourceTable ="Income Category table";
+    SourceTable = "Zyn_Income Category Table";
     ApplicationArea = ALL;
     Caption = 'Income Category List';
-    CardPageID = "Income Category Card";
+    CardPageID = "Zyn_Income Category Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -23,7 +22,7 @@ page 50124 "Income Category List"
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }
@@ -31,7 +30,7 @@ page 50124 "Income Category List"
         }
         area(factboxes)
         {
-            part(IncomeCategoryFactbox; "Income Category FactBox")
+            part(IncomeCategoryFactbox; "Zyn_Income Category FactBox")
             {
                 SubPageLink = Name = field(Name); // Link FactBox to selected category
                 ApplicationArea = All;

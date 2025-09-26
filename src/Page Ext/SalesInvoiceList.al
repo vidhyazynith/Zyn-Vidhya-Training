@@ -1,4 +1,4 @@
-pageextension 50114 SalesInvListExt extends "Sales Invoice List"
+pageextension 50114 Zyn_SalesInvoiceListExt extends "Sales Invoice List"
 {
     actions
     {
@@ -8,13 +8,8 @@ pageextension 50114 SalesInvListExt extends "Sales Invoice List"
             {
                 ApplicationArea = All;
                 Caption = 'Bulk Posting';
-                // trigger OnAction()
-                // begin
-                //     Report.RunModal(Report::"Batch Posted Sales Invoice", true, true);
-                // end;
-                RunObject = report "Batch Posted Sales Invoice";
+                RunObject = report Zyn_BatchPostedSalesInvoice;
             }
         }
-        
     }
 }

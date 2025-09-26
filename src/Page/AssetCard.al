@@ -1,10 +1,9 @@
-page 50152 "AssetCard"
+page 50152 Zyn_AssetCard
 {
     PageType = Card;
-    SourceTable ="Assets Table";
+    SourceTable = "Zyn_Assets Table";
     ApplicationArea = ALL;
     Caption = 'Asset Card';
-
     layout
     {
         area(content)
@@ -12,10 +11,12 @@ page 50152 "AssetCard"
             group(General)
             {
                 field("Asset Id"; Rec."Asset ID")
-                { ApplicationArea = All; }
+                {
+                    ApplicationArea = All;
+                }
                 field("Asset Type"; Rec."Asset Type")
                 {
-                    ApplicationArea =All;
+                    ApplicationArea = All;
                 }
                 field("Serial No"; Rec."Serial No")
                 {
@@ -36,8 +37,8 @@ page 50152 "AssetCard"
 
             }
         }
-    }  
-      trigger OnAfterGetRecord()
+    }
+    trigger OnAfterGetRecord()
     begin
         Rec.UpdateAvailability();
     end;

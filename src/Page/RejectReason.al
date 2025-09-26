@@ -1,9 +1,8 @@
-page 50165 "ZYN_Reject Claim Reason"
+page 50165 "Zyn_Reject Claim Reason"
 {
     PageType = StandardDialog;
     ApplicationArea = All;
     Caption = 'Enter Rejection Reason';
-
     layout
     {
         area(content)

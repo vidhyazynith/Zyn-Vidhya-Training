@@ -1,14 +1,13 @@
-page 50127 "Budget List Page"
+page 50127 Zyn_BudgetList
 {
     PageType = List;
-    SourceTable ="Budget table";
+    SourceTable = "Zyn_Budget Table";
     ApplicationArea = ALL;
     Caption = 'Budget List';
-    CardPageID = "Budget Card Page"; 
+    CardPageID = "Zyn_Budget Card";
     UsageCategory = "Lists";
     InsertAllowed = false;
     ModifyAllowed = false;
-
     layout
     {
         area(content)
@@ -16,7 +15,9 @@ page 50127 "Budget List Page"
             repeater(Group)
             {
                 field("Budget ID"; Rec."Budget ID")
-                { }
+                {
+
+                }
                 field("From date"; Rec."From Date")
                 {
                     ApplicationArea = All;
@@ -25,16 +26,15 @@ page 50127 "Budget List Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Category";Rec.Category)
+                field("Category"; Rec.Category)
                 {
                     ApplicationArea = All;
                 }
-                field("Amount";Rec."Budget Amount")
+                field("Amount"; Rec."Budget Amount")
                 {
                     ApplicationArea = All;
                 }
-
             }
         }
-    }  
+    }
 }

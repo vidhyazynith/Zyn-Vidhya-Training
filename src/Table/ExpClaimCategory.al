@@ -1,7 +1,6 @@
 table 50121 "ZYN_Expense Claim Category"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(1; "Claim Category ID"; Code[30])
@@ -29,7 +28,6 @@ table 50121 "ZYN_Expense Claim Category"
             DataClassification = ToBeClassified;
             Caption = 'Limit';
         }
-
     }
     keys
     {

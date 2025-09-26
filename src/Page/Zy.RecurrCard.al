@@ -1,10 +1,9 @@
-page 50123 "Recurr Exp Card"
+page 50123 Zyn_RecurringExpenseCard
 {
     PageType = List;
-    SourceTable = "Recurring Expense";
+    SourceTable = Zyn_RecurringExpenseTable;
     Caption = 'Recurring Expense Card';
-    ApplicationArea = All; 
-
+    ApplicationArea = All;
     layout
     {
         area(content)

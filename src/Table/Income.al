@@ -1,4 +1,4 @@
-table 50117 "Income Table"
+table 50117 "Zyn_Income Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -22,15 +22,14 @@ table 50117 "Income Table"
         field(5; "Category"; Code[100])
         {
             Caption = 'Category';
-            TableRelation = "Income Category Table".Name;
+            TableRelation = "Zyn_Income Category Table".Name;
         }
         field(6; "Category Name"; Text[100])
         {
             FieldClass = FlowField;
-            CalcFormula = lookup("Income Category Table".Name where("Category ID" = field(Category)));
+            CalcFormula = lookup("Zyn_Income Category Table".Name where("Category ID" = field(Category)));
         }
     }
-
     keys
     {
         key(PK; "Income ID")

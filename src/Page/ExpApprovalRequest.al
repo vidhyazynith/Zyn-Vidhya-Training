@@ -1,4 +1,4 @@
-page 50164 "ZYN_Claim Approval Request"
+page 50164 "Zyn_Claim Approval Request"
 {
     PageType = List;
     SourceTable = "ZYN_Expense Claim Table";
@@ -45,7 +45,7 @@ page 50164 "ZYN_Claim Approval Request"
                     ApplicationArea = All;
                     trigger OnDrillDown()
                     var
-                        BillMgt: Codeunit "ZYN_Bill File Management";
+                        BillMgt: Codeunit "Zyn_Bill File Management";
                     begin
                         BillMgt.ViewBill(Rec);
                     end;
@@ -59,7 +59,6 @@ page 50164 "ZYN_Claim Approval Request"
                     ApplicationArea = All;
                 }
             }
-
         }
     }
     actions
@@ -108,7 +107,6 @@ page 50164 "ZYN_Claim Approval Request"
                     Message('Claim %1 has been approved.', Rec."Claim ID");
                 end;
             }
-
             action(RejectClaim)
             {
                 Caption = 'Reject';
@@ -116,7 +114,7 @@ page 50164 "ZYN_Claim Approval Request"
                 Image = Reject;
                 trigger OnAction()
                 var
-                    RejectDialog: Page "ZYN_Reject Claim Reason";
+                    RejectDialog: Page "Zyn_Reject Claim Reason";
                     ReasonText: Text[50];
                 begin
                     // 1. Status must be Pending Approval
@@ -142,7 +140,6 @@ page 50164 "ZYN_Claim Approval Request"
                 end;
             }
         }
-
     }
     trigger OnAfterGetRecord()
     begin

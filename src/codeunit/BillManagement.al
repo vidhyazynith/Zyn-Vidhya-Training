@@ -1,6 +1,7 @@
-codeunit 50104 "ZYN_Bill File Management"
+codeunit 50104 "Zyn_Bill File Management"
 {
     Subtype = Normal;
+    //procedure for upload bill 
     procedure UploadBill(var ExpenseClaim: Record "ZYN_Expense Claim Table")
     var
         InStream: InStream;
@@ -19,7 +20,7 @@ codeunit 50104 "ZYN_Bill File Management"
                 Error('Bill upload failed. Please try again.');
         end;
     end;
-
+    //Procedure for Download bill on drill down
     procedure ViewBill(var ExpenseClaim: Record "ZYN_Expense Claim Table")
     var
         InStr: InStream;

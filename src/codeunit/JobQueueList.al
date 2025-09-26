@@ -1,16 +1,14 @@
-codeunit 50102 "Recurring Expense Processor"
+codeunit 50102 "Zyn_RecurringExpenseProcessor"
 {
-    Subtype = Normal;
- 
+    Subtype = Normal; 
     trigger OnRun()
     begin
         ProcessRecurringExpenses();
     end;
- 
     local procedure ProcessRecurringExpenses()
     var
-        RecExp: Record "Recurring Expense";
-        Exp: Record "Expense Table";
+        RecExp: Record Zyn_RecurringExpenseTable;
+        Exp: Record "Zyn_Expense Table";
     begin
         RecExp.Reset();
         if RecExp.FindSet() then
@@ -25,17 +23,16 @@ codeunit 50102 "Recurring Expense Processor"
                     Exp.Category := RecExp.Category;
                     Exp.Date := RecExp."Next Cycle Date"; // use NextCycle instead of WorkDate
                     Exp.Insert(true);
- 
                     // Update next cycle date
                     RecExp.CalcNextCycleDate(RecExp."Next Cycle Date", RecExp.Cycle);
                     RecExp.Modify(true);
                 end;
             until RecExp.Next() = 0;
     end;
- 
+    //Get Next Expense ID 
     local procedure GetNextExpenseID(): Integer
     var
-        Exp: Record "Expense Table";
+        Exp: Record "Zyn_Expense Table";
     begin
         if Exp.FindLast() then
             exit(Exp."Expense ID" + 1)

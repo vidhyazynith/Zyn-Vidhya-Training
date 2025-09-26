@@ -1,29 +1,24 @@
-namespace DefaultPublisher.ALProject4;
-using Microsoft.Sales.Customer;
-
-page 50106 "New Roll Center"
+page 50106 Zyn_RollCenter
 {
     PageType = RoleCenter;
     ApplicationArea = All;
-    SourceTable = "Customer Visit Log";
-
+    SourceTable = "Zyn_Customer VisitLog Table";
     layout
     {
         area(rolecenter)
         {
-            part(Cues; "Customer Cue Card")
-            {
-                ApplicationArea = All;
-
-            }
-            part(SubscriptionCues; "ZYN_Subscription Cue Page")
+            part(Cues; "Zyn_Customer Cue Card")
             {
                 ApplicationArea = All;
             }
-             part(SubscriptionReminder; "ZYN_Reminder Notification")
-                {
-                    ApplicationArea = All;
-                }
+            part(SubscriptionCues; "Zyn_Subscription Cue Page")
+            {
+                ApplicationArea = All;
+            }
+            part(SubscriptionReminder; "Zyn_Reminder Notification")
+            {
+                ApplicationArea = All;
+            }
         }
     }
     actions
@@ -33,14 +28,12 @@ page 50106 "New Roll Center"
             group(customer)
             {
                 Caption = 'Customer';
-
                 action("Customers")
                 {
                     ApplicationArea = All;
                     Caption = 'Customer List';
                     RunObject = page "Customer List";
                 }
-
                 action("CustomerContact")
                 {
                     ApplicationArea = All;
@@ -50,103 +43,99 @@ page 50106 "New Roll Center"
             group(Technician)
             {
                 Caption = 'Technician';
-
                 action("TechnicianList")
                 {
                     ApplicationArea = All;
                     Caption = 'Technician List';
-                    RunObject = page "Technician List";
+                    RunObject = page "Zyn_Technician list";
                 }
             }
-
-             group("Assets")
+            group("Assets")
             {
                 Caption = 'Assets';
-                 action("Asset Type List")
+                action("Asset Type List")
                 {
                     Caption = 'Asset Type List';
                     ApplicationArea = All;
-                    RunObject = page "Asset Type List";
+                    RunObject = page "Zyn_Asset Type List";
                 }
-
                 action("Asset List")
                 {
                     Caption = 'Asset List';
                     ApplicationArea = All;
-                    RunObject = page AssetList;
+                    RunObject = page Zyn_AssetList;
                 }
                 action("Employee List")
                 {
                     Caption = 'Employee List';
                     ApplicationArea = All;
-                    RunObject = page "Employee List page";
+                    RunObject = page "Zyn_Employee List";
                 }
- 
                 action("Employee Assets")
                 {
                     Caption = 'Employee Assets';
                     ApplicationArea = All;
-                    RunObject = page EmpAssetList;
+                    RunObject = page "Zyn_Employee Asset list";
                 }
             }
             group("Leave Management")
             {
-                Caption='Leave Management';
+                Caption = 'Leave Management';
                 action("Leave Category")
                 {
                     Caption = 'Leave Category';
                     ApplicationArea = All;
-                    RunObject = page "Leave Cat. List Page";
+                    RunObject = page "Zyn_Leave Category List";
                 }
                 action("Leave Request")
                 {
                     Caption = 'Leave Request';
                     ApplicationArea = All;
-                    RunObject = page "Leave Req List Page";
+                    RunObject = page "Zyn_Leave Request List";
                 }
             }
             group("Expenses")
             {
-                Caption='Expenses';
+                Caption = 'Expenses';
                 action("Expense Category")
                 {
                     Caption = 'Expense Category';
                     ApplicationArea = All;
-                    RunObject = page "Category List Page";
+                    RunObject = page "Zyn_Category List";
                 }
                 action("Expense List")
                 {
                     Caption = 'Expense List';
                     ApplicationArea = All;
-                    RunObject = page "Expense List Page";
+                    RunObject = page "Zyn_Expense List";
                 }
                 action("Recurring Expense")
                 {
-                    Caption='Recurring Expense';
-                    ApplicationArea=All;
-                    RunObject=page "Recurr Exp List";
+                    Caption = 'Recurring Expense';
+                    ApplicationArea = All;
+                    RunObject = page Zyn_RecurringExpenseList;
                 }
             }
             group("Budget~Income")
             {
-                Caption='Budget~Income';
+                Caption = 'Budget~Income';
                 action("Budget List")
                 {
                     Caption = 'Budget List';
                     ApplicationArea = All;
-                    RunObject = page "Budget List Page";
+                    RunObject = page Zyn_BudgetList;
                 }
                 action("Income Category")
                 {
                     Caption = 'Income Category';
                     ApplicationArea = All;
-                    RunObject = page "Income Category List";
+                    RunObject = page "Zyn_Income Category List";
                 }
                 action("Income List")
                 {
                     Caption = 'Income List';
                     ApplicationArea = All;
-                    RunObject = page "Income List Page";
+                    RunObject = page "Zyn_Income List";
                 }
             }
         }

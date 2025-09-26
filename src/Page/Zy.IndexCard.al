@@ -1,10 +1,9 @@
-page 50143 "Index Card Page"
+page 50143 "Zyn_Index Card"
 {
     PageType = Card;
-    SourceTable ="Index table";
+    SourceTable = "Zyn_Index table";
     ApplicationArea = ALL;
     Caption = 'Index Card';
-
     layout
     {
         area(content)
@@ -15,7 +14,7 @@ page 50143 "Index Card Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Description";Rec.Description)
+                field("Description"; Rec.Description)
                 {
                     ApplicationArea = All;
                 }
@@ -32,13 +31,11 @@ page 50143 "Index Card Page"
                     ApplicationArea = All;
                 }
             }
-            part("Index Subpage"; "Index List Part")
+            part("Index Subpage"; "Zyn_Index ListPart")
             {
                 SubPageLink = "Code" = field(Code);
                 ApplicationArea = All;
             }
-
         }
-
     }
 }

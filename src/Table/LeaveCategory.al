@@ -1,4 +1,4 @@
-table 50105 "Leave Category Table"
+table 50105 "Zyn_Leave Category Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -11,20 +11,19 @@ table 50105 "Leave Category Table"
         field(2; "Category Name"; Code[30])
         {
             Caption = 'Category Name';
-            DataClassification =  CustomerContent;
+            DataClassification = CustomerContent;
         }
         field(3; "Description"; Text[50])
         {
             Caption = 'Description';
             DataClassification = CustomerContent;
         }
-        field(4; "Allowed Days"; Integer )
+        field(4; "Allowed Days"; Integer)
         {
             Caption = 'No. of Days Allowed';
             DataClassification = CustomerContent;
         }
     }
-
     keys
     {
         key(PK; "Category Name")

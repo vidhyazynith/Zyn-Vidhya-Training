@@ -1,4 +1,4 @@
-table 50114 "Assets Table"
+table 50114 "Zyn_Assets Table"
 {
     DataClassification = ToBeClassified;
     fields
@@ -11,7 +11,7 @@ table 50114 "Assets Table"
         field(2; "Asset Type"; text[100])
         {
             Caption = 'Asset Type';
-            TableRelation = "Asset Type Table"."name";
+            TableRelation = "Zyn_Asset Type Table"."name";
         }
         field(3; "Serial No"; Code[30])
         {
@@ -34,25 +34,21 @@ table 50114 "Assets Table"
             Caption = 'Available';
 
         }
-        
     }
-
     keys
     {
-        key(PK; "Asset ID","Serial No","Asset Type")
+        key(PK; "Asset ID", "Serial No", "Asset Type")
         {
             Clustered = true;
         }
     }
-    
-procedure UpdateAvailability()
+    procedure UpdateAvailability()
     var
         ExpiryDate: Date;
         WorkDate: Date;
-        EmpAssetRec: Record "Employee Asset Table";
+        EmpAssetRec: Record "Zyn_Employee Asset Table";
     begin
         WorkDate := System.WorkDate();
-
         // Check 5 years expiry
         if Rec."Procured Date" = 0D then begin
             Rec.Available := false;
@@ -63,11 +59,9 @@ procedure UpdateAvailability()
             Rec.Available := false;
             exit;
         end;
-
         // Check assignment status
         EmpAssetRec.Reset();
         EmpAssetRec.SetRange("Serial No", Rec."Serial No");
-
         if EmpAssetRec.FindLast() then begin
             case EmpAssetRec.Status of
                 EmpAssetRec.Status::Assigned:
@@ -95,7 +89,7 @@ procedure UpdateAvailability()
 
     trigger OnDelete()
     var
-        EmpAssetRec: Record "Employee Asset Table";
+        EmpAssetRec: Record "Zyn_Employee Asset Table";
     begin
         // Check if there are assigned EmpAssets
         EmpAssetRec.Reset();
@@ -103,7 +97,6 @@ procedure UpdateAvailability()
         EmpAssetRec.SetRange(Status, EmpAssetRec.Status::Assigned);
         if EmpAssetRec.FindFirst() then
             Error('Cannot delete Asset %1 because it is currently assigned.', Rec."Serial No");
-
         // Delete related EmpAssets (returned/lost/others)
         EmpAssetRec.Reset();
         EmpAssetRec.SetRange("Serial No", Rec."Serial No");
