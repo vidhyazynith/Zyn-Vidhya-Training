@@ -38,7 +38,7 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
                         NewContact.ChangeCompany(SlaveCompany.Name);
                         if not NewContact.Get(Rec."No.") then begin
                             NewContact.Init();
-                            NewContact.TransferFields(Rec, true);    // copy all fields from master contact
+                            NewContact.TransferFields(Rec, true); // copy all fields from master contact
                             NewContact.Insert(true);
                         end;
                     until SlaveCompany.Next() = 0;
@@ -98,13 +98,12 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
                     until SlaveCompany.Next() = 0;
             end else begin
                 if (not MasterCompany."Is Master") and (MasterCompany."Master Company Name" <> '') then begin
-                    // Validation in slave company
                     // Allow system modifications, block manual user modifications
-                    if (UserId = '') or (UpperCase(UserId) = 'NT AUTHORITY\SYSTEM') then
-                        exit; //system update allowed
-                    if not RunTrigger then
-                        exit; //background modify without triggers
-                              //otherwise block user edit
+                    //if (UserId = '') or (UpperCase(UserId) = 'NT AUTHORITY\SYSTEM') then
+                    //exit; //system update allowed
+                    //if not RunTrigger then
+                    //exit; //background modify without triggers
+                    //otherwise block user edit
                     Error(ModifyContactInSlaveErr);
                 end;
             end;
@@ -129,8 +128,9 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
         // Only master company should be validated here
         if not ZynCompany.Get(CompanyName()) then
             exit;
-        if not ZynCompany."Is Master" then
-            exit; // slaves already blocked elsewhere
+        // Block deletion if the current company is a slave
+        if (not ZynCompany."Is Master") and (ZynCompany."Master Company Name" <> '') then
+            Error(DeleteContactInSlaveErr);
         // Check all slave companies for open invoices
         SlaveCompany.Reset();
         SlaveCompany.SetRange("Master Company Name", ZynCompany.Name);
@@ -163,7 +163,6 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
             Error(ErrText, SlaveCompany.Name);
         end;
     end;
-
     // After delete → replicate deletion in slaves and related customer/vendor records
     [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterDeleteEvent', '', true, true)]
     local procedure ContactOnAfterDelete(var Rec: Record Contact; RunTrigger: Boolean)

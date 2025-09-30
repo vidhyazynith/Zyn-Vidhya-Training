@@ -79,6 +79,38 @@ pageextension 50100 Zyn_CustomerCardExt extends "Customer Card"
                     Page.Run(Page::Zyn_CompliantCard, ProblemRec);
                 end;
             }
+            action(SendToSlave)
+            {
+                Caption = 'Send To Slave Company';
+                ApplicationArea = All;
+                Image = SendTo;
+                trigger OnAction()
+                var
+                    CurrentCompanyRec: Record "Zyn_Company Table";
+                    SlaveCompanyRec: Record "Zyn_Company Table";
+                    MirrorMgt: Codeunit "Zyn_SendFromMasterToSlaveMgt";
+                begin
+                    if not CurrentCompanyRec.Get(CompanyName()) then
+                        exit;
+                    // Ensure current is Master company
+                    if (not CurrentCompanyRec."Is Master") and (CurrentCompanyRec."Master Company Name" <> '') then
+                        Error('You can send customer only from a Master company.');
+                    // Apply filter before opening the lookup page
+                    SlaveCompanyRec.Reset();
+                    SlaveCompanyRec.SetRange("Is Master", false);
+                    SlaveCompanyRec.SetRange("Master Company Name", CurrentCompanyRec.Name);
+                    // Open the lookup page with filtered records
+                    if Page.RunModal(Page::"Zyn_Company List", SlaveCompanyRec) = Action::LookupOK then begin
+                        if SlaveCompanyRec.FindSet() then begin
+                            repeat
+                                MirrorMgt.MirrorCustomerToSlave(Rec."No.", SlaveCompanyRec.Name);
+                            until SlaveCompanyRec.Next() = 0;
+                            Message('Customer %1 sent to %2 slave companies.', Rec."No.", SlaveCompanyRec.Count);
+                        end else
+                            Message('No slave companies were selected.');
+                    end;
+                end;
+            }
         }
     }
     trigger OnOpenPage()
@@ -102,6 +134,14 @@ pageextension 50100 Zyn_CustomerCardExt extends "Customer Card"
         if IsNewCustomer and (rec.Name <> '') then begin
             publisherMessage.NewCompanyCreated(Rec);
         end;
+    end;
+
+    procedure IsCurrentCompanyMaster(): Boolean
+    var
+        Comp: Record "Zyn_Company Table";
+    begin
+        Comp.Get(CompanyName);
+        exit(Comp."Is Master");
     end;
 
     var

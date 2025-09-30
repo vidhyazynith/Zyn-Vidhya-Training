@@ -1,24 +1,8 @@
-pageextension 50115 Zyn_CustomerListExt extends "Customer List"
+pageextension 50105 Zyn_VendorCardExt extends "Vendor Card"
 {
-    layout
-    {
-        addfirst(factboxes)
-        {
-            part("Cust Fact box"; Zyn_CustomerFactBox)
-            {
-                SubPageLink = "No." = field("No.");
-                ApplicationArea = All;
-            }
-            part(CustomerSubscriptions; Zyn_CustomerSubscripFactBox)
-            {
-                ApplicationArea = All;
-                SubPageLink = "No." = field("No.");
-            }
-        }
-    }
     actions
     {
-        addlast(processing)
+        addlast(Processing)
         {
             action(SendToSlave)
             {
@@ -35,7 +19,7 @@ pageextension 50115 Zyn_CustomerListExt extends "Customer List"
                         exit;
                     // Ensure current is Master company
                     if (not CurrentCompanyRec."Is Master") and (CurrentCompanyRec."Master Company Name" <> '') then
-                        Error('You can send customer only from a Master company.');
+                        Error('You can send vendors only from a Master company.');
                     // Apply filter before opening the lookup page
                     SlaveCompanyRec.Reset();
                     SlaveCompanyRec.SetRange("Is Master", false);
@@ -44,9 +28,9 @@ pageextension 50115 Zyn_CustomerListExt extends "Customer List"
                     if Page.RunModal(Page::"Zyn_Company List", SlaveCompanyRec) = Action::LookupOK then begin
                         if SlaveCompanyRec.FindSet() then begin
                             repeat
-                                MirrorMgt.MirrorCustomerToSlave(Rec."No.", SlaveCompanyRec.Name);
+                                MirrorMgt.MirrorVendorToSlave(Rec."No.", SlaveCompanyRec.Name);
                             until SlaveCompanyRec.Next() = 0;
-                            Message('Customer %1 sent to slave companies.', Rec."No.");
+                            Message('Vendor %1 sent to %2 slave companies.', Rec."No.", SlaveCompanyRec.Count);
                         end else
                             Message('No slave companies were selected.');
                     end;
