@@ -53,5 +53,23 @@ pageextension 50108 Zyn_ContactListExt extends "Contact List"
                 end;
             }
         }
+        modify(Customer)
+        {
+            trigger OnBeforeAction()
+            var
+                SingleInstanceMgt: Codeunit Zyn_SingleInstanceMgt;
+            begin
+                SingleInstanceMgt.SetFromCreateAs();
+            end;
+        }
+        modify(Vendor)
+        {
+            trigger OnBeforeAction()
+            var
+                SingleInstanceMgt: Codeunit Zyn_SingleInstanceMgt;
+            begin
+                SingleInstanceMgt.SetFromCreateAs();
+            end;
+        }
     }
 }

@@ -2,9 +2,40 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
 {
     var
         IsSyncing: Boolean;
-    // Prevent Contact creation in slave company
+    // ---------------- EVENT SUBSCRIBERS ----------------
+    // Event: Prevent Contact creation in slave company
     [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeInsertEvent', '', true, true)]
     local procedure ContactOnBeforeInsert(var Rec: Record Contact; RunTrigger: Boolean)
+    begin
+        HandleContactOnBeforeInsert(Rec, RunTrigger);
+    end;
+    // Event: Sync contact from master to all slaves
+    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterInsertEvent', '', true, true)]
+    local procedure ContactOnAfterInsert(var Rec: Record Contact; RunTrigger: Boolean)
+    begin
+        HandleContactOnAfterInsert(Rec, RunTrigger);
+    end;
+    // Event: Sync modified contact from master to all slave
+    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterModifyEvent', '', true, true)]
+    local procedure ContactOnAfterModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
+    begin
+        HandleContactOnAfterModify(Rec, xRec, RunTrigger);
+    end;
+    //Event: Prevent deletion of contact in slave company
+    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeDeleteEvent', '', true, true)]
+    local procedure ContactOnBeforeDelete(var Rec: Record Contact; RunTrigger: Boolean)
+    begin
+        HandleContactOnBeforeDelete(Rec, RunTrigger);
+    end;
+    // After delete → replicate deletion in slaves and related customer/vendor records
+    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterDeleteEvent', '', true, true)]
+    local procedure ContactOnAfterDelete(var Rec: Record Contact; RunTrigger: Boolean)
+    begin
+        HandleContactOnAfterDelete(Rec, RunTrigger);
+    end;
+    // ---------------- LOCAL PROCEDURES ----------------
+    //Handles OnBeforeInsert event for Contact
+    local procedure HandleContactOnBeforeInsert(var Rec: Record Contact; RunTrigger: Boolean)
     var
         ZynCompany: Record "Zyn_Company Table";
     begin
@@ -15,16 +46,21 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
                 Error(CreateContactInSlaveErr);
         end;
     end;
-
-    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterInsertEvent', '', true, true)]
-    local procedure ContactOnAfterInsert(var Rec: Record Contact; RunTrigger: Boolean)
+    //Handles OnAfterInsert event for Contact
+    local procedure HandleContactOnAfterInsert(var Rec: Record Contact; RunTrigger: Boolean)
     var
         MasterCompany: Record "Zyn_Company Table";
         SlaveCompany: Record "Zyn_Company Table";
         NewContact: Record Contact;
+        SingleInstanceMgt: Codeunit Zyn_SingleInstanceMgt;
     begin
         if IsSyncing then
             exit;
+        if SingleInstanceMgt.GetFromCreateAs() then begin
+            // contact insert was part of Create As flow — skip replication here
+            SingleInstanceMgt.ClearCreateAs();
+            exit;
+        end;
         IsSyncing := true;
         // Get the current company as master company
         if MasterCompany.Get(COMPANYNAME) then begin
@@ -47,9 +83,8 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
         end;
         IsSyncing := false;
     end;
-
-    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterModifyEvent', '', true, true)]
-    local procedure ContactOnAfterModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
+    //Handles OnAfterModify event for Contact
+    local procedure HandleContactOnAfterModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
     var
         MasterCompany: Record "Zyn_Company Table";
         SlaveCompany: Record "Zyn_Company Table";
@@ -60,9 +95,17 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
         SlaveField: FieldRef;
         i: Integer;
         IsDifferent: Boolean;
+        SingleInstanceMgt: Codeunit Zyn_SingleInstanceMgt;
     begin
+        // Prevent re-entrancy
         if IsSyncing then
             exit;
+        if SingleInstanceMgt.GetFromCreateAs() then begin
+            SingleInstanceMgt.ClearCreateAs();
+            exit;
+        end;
+        //If this modification originated from the page "Create as Customer/Vendor",
+        // skip propagating it to slaves. Clear the flag so it only suppresses once.
         if MasterCompany.Get(COMPANYNAME) then begin
             if MasterCompany."Is Master" then begin
                 // Replicate modifications to all slaves
@@ -98,20 +141,13 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
                     until SlaveCompany.Next() = 0;
             end else begin
                 if (not MasterCompany."Is Master") and (MasterCompany."Master Company Name" <> '') then begin
-                    // Allow system modifications, block manual user modifications
-                    //if (UserId = '') or (UpperCase(UserId) = 'NT AUTHORITY\SYSTEM') then
-                    //exit; //system update allowed
-                    //if not RunTrigger then
-                    //exit; //background modify without triggers
-                    //otherwise block user edit
                     Error(ModifyContactInSlaveErr);
                 end;
             end;
         end;
     end;
-
-    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeDeleteEvent', '', true, true)]
-    local procedure ContactOnBeforeDelete(var Rec: Record Contact; RunTrigger: Boolean)
+    //Handles OnBeforeDelete event for Contact
+    local procedure HandleContactOnBeforeDelete(var Rec: Record Contact; RunTrigger: Boolean)
     var
         ZynCompany: Record "Zyn_Company Table";
         SlaveCompany: Record "Zyn_Company Table";
@@ -163,9 +199,8 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
             Error(ErrText, SlaveCompany.Name);
         end;
     end;
-    // After delete → replicate deletion in slaves and related customer/vendor records
-    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterDeleteEvent', '', true, true)]
-    local procedure ContactOnAfterDelete(var Rec: Record Contact; RunTrigger: Boolean)
+    //Handles OnAfterDelete event for Contact
+    local procedure HandleContactOnAfterDelete(var Rec: Record Contact; RunTrigger: Boolean)
     var
         ZynCompany: Record "Zyn_Company Table";
         SlaveCompany: Record "Zyn_Company Table";
@@ -207,14 +242,14 @@ codeunit 50107 "Zyn_ContactMaster-SlaveSync"
                     SlaveContact.Delete(true);
             until SlaveCompany.Next() = 0;
         IsSyncing := false;
-        Message(DeleteMsg, Rec."No.");
+        Message(ContactDeleteMsg, Rec."No.");
     end;
-
+    // ---------------- LABELS ----------------
     var
         CreateContactInSlaveErr: Label 'You cannot create contacts in a slave company. Create the contact in the master company only.';
         ModifyContactInSlaveErr: Label 'You cannot modify contacts in a slave company. Modify contacts only in the master company.';
         DeleteContactInSlaveErr: Label 'You cannot delete contacts in a slave company. Delete contacts only in the master company.';
         UnpostedSalesInvoiceErr: Label 'Unposted Sales Invoice in Slave company %1.';
         UnpostedPurchaseInvoiceErr: Label 'Unposted Purchase Invoice in Slave company %1.';
-        DeleteMsg: Label 'Contact %1 deleted successfully from Master and all Slaves.';
+        ContactDeleteMsg: Label 'Contact %1 deleted successfully from Master and all Slaves.';
 }

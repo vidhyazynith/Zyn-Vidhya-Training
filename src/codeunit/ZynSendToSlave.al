@@ -2,7 +2,7 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
 {
     var
         IsSync: Boolean;
-
+    //Mirrors a Customer record from the Master company to the specified Slave company.
     procedure MirrorCustomerToSlave(CustomerNo: Code[20]; SlaveCompany: Text[30])
     var
         MasterCustomer: Record Customer;
@@ -12,6 +12,7 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         MasterContactRelation: Record "Contact Business Relation";
         SlaveContactRelation: Record "Contact Business Relation";
         SlaveContact: Record Contact;
+        GlobalMgt: Codeunit Zyn_SingleInstanceMgt;
     begin
         if IsSync or (SlaveCompany = CompanyName()) then
             exit;
@@ -19,7 +20,7 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         IsSync := true;
         if not MasterCustomer.Get(CustomerNo) then begin
             IsSync := false;
-            Error('Customer %1 not found in Master.', CustomerNo);
+            Error(CustomerNotFoundErr, CustomerNo);
         end;
         SlaveCustomer.ChangeCompany(SlaveCompany);
         if not SlaveCustomer.Get(CustomerNo) then begin
@@ -33,7 +34,6 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
                 SlaveCustomer.Modify(false);
             end;
         end;
-
         // replicate Contact Business Relation rows
         MasterContactRelation.SetRange("No.", MasterCustomer."No.");
         if MasterContactRelation.FindSet() then begin
@@ -54,22 +54,27 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
                         SlaveContactRelation."Business Relation Code" := MasterContactRelation."Business Relation Code";
                         SlaveContactRelation."Business Relation Description" := MasterContactRelation."Business Relation Description";
                         SlaveContactRelation.Insert(false);
+                        // After inserting the relation, update the Contact's Business Relation field in slave
+                        SlaveContact.ChangeCompany(SlaveCompany);
+                        if SlaveContact.Get(MasterContactRelation."Contact No.") then begin
+                            SlaveContact.UpdateBusinessRelation();
+                            SlaveContact.Modify(true);
+                        end;
                     end;
                 end else
-                    Message('Contact %1 not found in slave company %2. Relation for Customer %3 skipped.',
-                        MasterContactRelation."Contact No.", SlaveCompany, MasterCustomer."No.");
+                    Message(ContactNotFoundMsg, MasterContactRelation."Contact No.", SlaveCompany);
             until MasterContactRelation.Next() = 0;
         end;
         if CompanyName() <> MasterCompany then
             DummyRecord.ChangeCompany(MasterCompany);
         IsSync := false;
     end;
-
+    //Mirrors a Vendor record from the Master company to the specified Slave company.
     procedure MirrorVendorToSlave(VendorNo: Code[20]; SlaveCompany: Text[30])
     var
         MasterVendor: Record Vendor;
         SlaveVendor: Record Vendor;
-        DummyRecord: Record Customer;
+        DummyRecord: Record Vendor;
         MasterCompany: Text[30];
         MasterContactRelation: Record "Contact Business Relation";
         SlaveContactRelation: Record "Contact Business Relation";
@@ -81,7 +86,7 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         IsSync := true;
         if not MasterVendor.Get(VendorNo) then begin
             IsSync := false;
-            Error('Vendor %1 not found in Master.', VendorNo);
+            Error(VendorNotFoundErr, VendorNo);
         end;
         SlaveVendor.ChangeCompany(SlaveCompany);
         if not SlaveVendor.Get(VendorNo) then begin
@@ -115,17 +120,22 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
                         SlaveContactRelation."Business Relation Code" := MasterContactRelation."Business Relation Code";
                         SlaveContactRelation."Business Relation Description" := MasterContactRelation."Business Relation Description";
                         SlaveContactRelation.Insert(false);
+                        // After inserting the relation, update the Contact's Business Relation field in slave
+                        SlaveContact.ChangeCompany(SlaveCompany);
+                        if SlaveContact.Get(MasterContactRelation."Contact No.") then begin
+                            SlaveContact.UpdateBusinessRelation();
+                            SlaveContact.Modify(true);
+                        end;
                     end;
                 end else
-                    Message('Contact %1 not found in slave company %2. Relation for Vendor %3 skipped.',
-                        MasterContactRelation."Contact No.", SlaveCompany, MasterVendor."No.");
+                    Message(ContactNotFoundMsg, MasterContactRelation."Contact No.", SlaveCompany);
             until MasterContactRelation.Next() = 0;
         end;
         if CompanyName() <> MasterCompany then
             DummyRecord.ChangeCompany(MasterCompany);
         IsSync := false;
     end;
-
+    //Compares two records (Customer or Vendor) to check if all normal fields are equal.
     local procedure AreRecordsEqual(MasterRecVariant: Variant; SlaveRecVariant: Variant): Boolean
     var
         MasterRef: RecordRef;
@@ -138,15 +148,21 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         SlaveRef.GetTable(SlaveRecVariant);
         for i := 1 to MasterRef.FieldCount do begin
             MasterField := MasterRef.FieldIndex(i);
-            // Skip system fields and primary keys (adjust if needed)
+            // Skip primary keys
             if MasterField.Class <> FieldClass::Normal then
                 continue;
-            if MasterField.Number in [1, 2, 3] then  // No., SystemId, etc.
+            if MasterField.Number in [1] then  // Ignores primary key field
                 continue;
             SlaveField := SlaveRef.Field(MasterField.Number);
+            //Returns TRUE if all comparable fields are equal; FALSE otherwise.
             if MasterField.Value <> SlaveField.Value then
                 exit(false);
         end;
         exit(true);
     end;
+    // ---------------- LABELS ----------------
+    var
+        ContactNotFoundMsg: Label 'Contact %1 not found in slave company %2.';
+        CustomerNotFoundErr: Label 'Customer %1 not found in Master.';
+        VendorNotFoundErr: Label 'Vendor %1 not found in Master.';
 }
