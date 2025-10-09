@@ -13,7 +13,7 @@ pageextension 50106 Zyn_VendorListExt extends "Vendor List"
                 var
                     CurrentCompanyRec: Record "Zyn_Company Table";
                     SlaveCompanyRec: Record "Zyn_Company Table";
-                    MirrorMgt: Codeunit "Zyn_SendFromMasterToSlaveMgt";
+                    MirrorMgt: Codeunit Zyn_SendFromMasterToSlaveMgt;
                 begin
                     if not CurrentCompanyRec.Get(CompanyName()) then
                         exit;

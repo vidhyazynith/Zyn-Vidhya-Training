@@ -29,7 +29,7 @@ pageextension 50115 Zyn_CustomerListExt extends "Customer List"
                 var
                     CurrentCompanyRec: Record "Zyn_Company Table";
                     SlaveCompanyRec: Record "Zyn_Company Table";
-                    MirrorMgt: Codeunit "Zyn_SendFromMasterToSlaveMgt";
+                    MirrorMgt: Codeunit Zyn_SendFromMasterToSlaveMgt;
                 begin
                     if not CurrentCompanyRec.Get(CompanyName()) then
                         exit;

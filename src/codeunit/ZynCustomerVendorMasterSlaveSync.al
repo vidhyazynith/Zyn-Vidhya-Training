@@ -100,7 +100,7 @@ codeunit 50109 Zyn_CustomerVendorMasterSlave
         MasterCompany: Record "Zyn_Company Table";
         SlaveCompany: Record "Zyn_Company Table";
         SlaveCustomer: Record Customer;
-        MasterSlaveMgt: Codeunit "Zyn_SendFromMasterToSlaveMgt";
+        MasterSlaveMgt: Codeunit Zyn_SendFromMasterToSlaveMgt;
     begin
         // Prevent recursion
         if IsCustomerSync then
@@ -200,7 +200,7 @@ codeunit 50109 Zyn_CustomerVendorMasterSlave
         MasterCompany: Record "Zyn_Company Table";
         SlaveCompany: Record "Zyn_Company Table";
         SlaveCustomer: Record Customer;
-        MasterSlaveMgt: Codeunit "Zyn_SendFromMasterToSlaveMgt";
+        MasterSlaveMgt: Codeunit Zyn_SendFromMasterToSlaveMgt;
     begin
         if IsVendorSync then
             exit;

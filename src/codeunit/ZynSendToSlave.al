@@ -1,4 +1,4 @@
-codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
+codeunit 50108 Zyn_SendFromMasterToSlaveMgt
 {
     var
         IsSync: Boolean;
@@ -12,7 +12,8 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         MasterContactRelation: Record "Contact Business Relation";
         SlaveContactRelation: Record "Contact Business Relation";
         SlaveContact: Record Contact;
-        GlobalMgt: Codeunit Zyn_SingleInstanceMgt;
+        SingleInstance: Codeunit Zyn_SingleInstanceMgt;
+        RelationType: Enum "Contact Business Relation";
     begin
         if IsSync or (SlaveCompany = CompanyName()) then
             exit;
@@ -55,11 +56,13 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
                         SlaveContactRelation."Business Relation Description" := MasterContactRelation."Business Relation Description";
                         SlaveContactRelation.Insert(false);
                         // After inserting the relation, update the Contact's Business Relation field in slave
-                        SlaveContact.ChangeCompany(SlaveCompany);
-                        if SlaveContact.Get(MasterContactRelation."Contact No.") then begin
-                            SlaveContact.UpdateBusinessRelation();
-                            SlaveContact.Modify(true);
-                        end;
+                    end else
+                        UpdateLinkToTableForBusinessRelation(SlaveContactRelation);
+                    SlaveContact.ChangeCompany(SlaveCompany);
+                    if SlaveContact.Get(MasterContactRelation."Contact No.") then begin
+                        RelationType := GetContactBusinessRelation(SlaveContact, SlaveCompany);
+                        SlaveContact."Contact Business Relation" := RelationType;
+                        SlaveContact.Modify(true);
                     end;
                 end else
                     Message(ContactNotFoundMsg, MasterContactRelation."Contact No.", SlaveCompany);
@@ -79,6 +82,7 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         MasterContactRelation: Record "Contact Business Relation";
         SlaveContactRelation: Record "Contact Business Relation";
         SlaveContact: Record Contact;
+        RelationType: Enum "Contact Business Relation";
     begin
         if IsSync or (SlaveCompany = CompanyName()) then
             exit;
@@ -121,11 +125,13 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
                         SlaveContactRelation."Business Relation Description" := MasterContactRelation."Business Relation Description";
                         SlaveContactRelation.Insert(false);
                         // After inserting the relation, update the Contact's Business Relation field in slave
-                        SlaveContact.ChangeCompany(SlaveCompany);
-                        if SlaveContact.Get(MasterContactRelation."Contact No.") then begin
-                            SlaveContact.UpdateBusinessRelation();
-                            SlaveContact.Modify(true);
-                        end;
+                    end else
+                        UpdateLinkToTableForBusinessRelation(SlaveContactRelation);
+                    SlaveContact.ChangeCompany(SlaveCompany);
+                    if SlaveContact.Get(MasterContactRelation."Contact No.") then begin
+                        RelationType := GetContactBusinessRelation(SlaveContact, SlaveCompany);
+                        SlaveContact."Contact Business Relation" := RelationType;
+                        SlaveContact.Modify(true);
                     end;
                 end else
                     Message(ContactNotFoundMsg, MasterContactRelation."Contact No.", SlaveCompany);
@@ -160,9 +166,53 @@ codeunit 50108 "Zyn_SendFromMasterToSlaveMgt"
         end;
         exit(true);
     end;
+    // Returns the correct Contact Business Relation (Customer/Vendor/None) for a given Contact in a company
+    local procedure GetContactBusinessRelation(SlaveContact: Record Contact; CompanyName: Text): Enum "Contact Business Relation"
+    var
+        SlaveBusinessRelation: Record "Contact Business Relation";
+        RelationType: Enum "Contact Business Relation";
+    begin
+        SlaveBusinessRelation.ChangeCompany(CompanyName);
+        SlaveBusinessRelation.SetRange("Contact No.", SlaveContact."No.");
+        if SlaveBusinessRelation.FindFirst() then begin
+            case SlaveBusinessRelation."Business Relation Code" of
+                'CUST':
+                    RelationType := Enum::"Contact Business Relation"::Customer;
+                'VEND':
+                    RelationType := Enum::"Contact Business Relation"::Vendor;
+                else
+                    RelationType := Enum::"Contact Business Relation"::" ";
+            end;
+        end else
+            RelationType := Enum::"Contact Business Relation"::" ";
+        exit(RelationType);
+    end;
+    //Helper procedure: Fix missing Link to Table dynamically
+    local procedure UpdateLinkToTableForBusinessRelation(var BusRel: Record "Contact Business Relation")
+    var
+        SlaveCustomer: Record Customer;
+        SlaveVendor: Record Vendor;
+    begin
+        // Only update if Link to Table is empty
+        if BusRel."Link to Table".AsInteger() = 0 then begin
+            case BusRel."Business Relation Code" of
+                'CUST':
+                    // Check if Customer exists
+                    if SlaveCustomer.Get(BusRel."No.") then
+                        BusRel."Link to Table" := Enum::"Contact Business Relation"::Customer;
+                'VEND':
+                    // Check if Vendor exists
+                    if SlaveVendor.Get(BusRel."No.") then
+                        BusRel."Link to Table" := Enum::"Contact Business Relation"::Vendor;
+            end;
+            if BusRel."Link to Table".AsInteger() <> 0 then
+                BusRel.Modify(true); // Save updated value
+        end;
+    end;
     // ---------------- LABELS ----------------
     var
         ContactNotFoundMsg: Label 'Contact %1 not found in slave company %2.';
         CustomerNotFoundErr: Label 'Customer %1 not found in Master.';
         VendorNotFoundErr: Label 'Vendor %1 not found in Master.';
+
 }

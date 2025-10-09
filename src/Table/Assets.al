@@ -6,20 +6,24 @@ table 50114 "Zyn_Assets Table"
         field(1; "Asset ID"; Integer)
         {
             Caption = 'Asset ID';
+            ToolTip = 'Specifies the unique system-generated identification number for the asset.';
             AutoIncrement = true;
         }
         field(2; "Asset Type"; text[100])
         {
             Caption = 'Asset Type';
+            ToolTip = 'Specifies the type or category of the asset, such as Laptop, Phone,etc.';
             TableRelation = "Zyn_Asset Type Table"."name";
         }
         field(3; "Serial No"; Code[30])
         {
             Caption = 'Serial No';
+            ToolTip = 'Specifies the unique serial number assigned to the asset.';
         }
         field(4; "Procured Date"; Date)
         {
             Caption = 'Procured Date';
+            ToolTip = 'Specifies the date on which the asset was procured or purchased.';
             trigger OnValidate()
             begin
                 UpdateAvailability();
@@ -28,11 +32,12 @@ table 50114 "Zyn_Assets Table"
         field(5; Vendor; Text[50])
         {
             Caption = 'Vendor';
+            ToolTip = 'Specifies the name of the vendor from whom the asset was purchased.';
         }
         field(6; Available; Boolean)
         {
             Caption = 'Available';
-
+            ToolTip = 'Indicates whether the asset is currently available for assignment or use.';
         }
     }
     keys
